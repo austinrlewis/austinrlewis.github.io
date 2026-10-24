@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Austin Lewis | Senior Power BI Developer</title>
+<meta name="description" content="Senior Power BI Developer, 8+ years: DAX, Snowflake and Azure BI semantic models, plus Python and AI automation. Open to remote roles.">
+<meta name="author" content="Austin Lewis">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Austin Lewis">
+<meta property="og:title" content="Austin Lewis | Senior Power BI Developer">
+<meta property="og:description" content="I build semantic models people trust, and I automate the work around them with Python and AI. Sample reports, projects and contact.">
+<meta property="og:url" content="https://austinrlewis.github.io/">
+<meta property="og:image" content="https://austinrlewis.github.io/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://austinrlewis.github.io/assets/og-image.png">
+<meta name="twitter:title" content="Austin Lewis | Senior Power BI Developer">
+<meta name="twitter:description" content="I build semantic models people trust, and I automate the work around them with Python and AI.">
+<link rel="canonical" href="https://austinrlewis.github.io/">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --bg: #0f1115; --band: #13161c; --card: #171a21; --line: #262b36;
+    --text: #e6e8ee; --muted: #9aa3b2; --accent: #5b9bff; --accent-ink: #0b1220;
+    --chip: #1d2230; --ctl: #5d6677;
+    /* Chart and status colours, run through the dataviz validator against --card. */
+    --bar: #4a8ff0; --bar-hi: #7aaeff; --grid: #262b36;
+    --good: #0ca30c; --warn: #fab219; --crit: #d03b3b; --crit-text: #f27474;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6f7f9; --band: #eef0f4; --card: #ffffff; --line: #e1e5ec;
+      --text: #14171f; --muted: #5b6475; --accent: #2563eb; --accent-ink: #ffffff;
+      --chip: #eef1f6; --ctl: #9aa3b2;
+      --bar: #2563eb; --bar-hi: #1d4ed8; --grid: #e6e9ef; --crit-text: #c62828;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.55 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    overflow-wrap: break-word;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .skip { position: absolute; left: 12px; top: -60px; z-index: 30; background: var(--accent); color: var(--accent-ink); padding: 8px 12px; border-radius: 8px; font-weight: 600; }
+  .skip:focus { top: 10px; }
+
+  nav { position: sticky; top: 0; z-index: 5; background: var(--bg); background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 16px; }
+  nav .name { font-weight: 700; font-size: 16px; color: var(--text); }
+  nav .links { display: flex; align-items: center; gap: 18px; font-size: 14px; }
+  nav .links a { color: var(--muted); }
+  nav .links a:hover { color: var(--text); text-decoration: none; }
+  nav .links a.btn { color: var(--accent-ink); }
+
+  .btn { display: inline-block; padding: 9px 16px; border-radius: 8px; font-size: 14px; font-weight: 600;
+    background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent); }
+  .btn:hover { text-decoration: none; filter: brightness(1.08); }
+  .btn.ghost { background: transparent; color: var(--text); border-color: var(--line); }
+  .btn.ghost:hover { border-color: var(--muted); filter: none; }
+
+  .hero { padding: 56px 0 48px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.6fr 1fr; gap: 40px; align-items: center; }
+  .eyebrow { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+  h1 { font-size: 42px; line-height: 1.12; margin: 16px 0 12px; letter-spacing: -.01em; }
+  .lede { font-size: 17px; color: var(--muted); margin: 0 0 18px; max-width: 34em; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none; }
+  .chips li { font-size: 12px; background: var(--chip); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; color: var(--muted); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .stat b { display: block; font-size: 28px; line-height: 1.1; }
+  .stat span { font-size: 13px; color: var(--muted); }
+
+  section { padding: 48px 0; border-top: 1px solid var(--line); scroll-margin-top: 56px; }
+  section.alt { background: var(--band); }
+  h2 { font-size: 26px; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 24px; font-size: 15px; max-width: 46em; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; margin-bottom: 14px; }
+  .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 12px; flex-wrap: wrap; }
+  .card h3 { font-size: 18px; margin: 0; }
+  .meta { font-size: 13px; color: var(--muted); }
+  .card ul { margin: 12px 0 14px; padding-left: 18px; }
+  .card li { margin: 5px 0; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags span { font-size: 12px; background: var(--chip); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; color: var(--muted); }
+  .earlier { font-size: 14px; color: var(--muted); margin: 4px 0 0; }
+
+  .thread { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; margin: 0 0 22px; font-size: 16px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid2 .card { margin: 0; display: flex; flex-direction: column; }
+  .pbr { margin: 12px 0 14px; display: grid; grid-template-columns: 64px 1fr; gap: 6px 10px; font-size: 14px; }
+  .pbr dt { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); padding-top: 2px; }
+  .pbr dd { margin: 0; }
+  .grid2 .tags { margin-top: auto; }
+
+  /* Property Command Center: a no-numbers diagram in place of a screenshot */
+  .flow { margin: 12px 0 0; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 10px 10px 8px; }
+  .flow svg { display: block; width: 100%; height: auto; }
+  .flow rect { fill: var(--card); stroke: var(--line); stroke-width: 1; }
+  .flow rect.key { stroke: var(--accent); }
+  .flow text { font-size: 11px; fill: var(--text); text-anchor: middle; font-family: inherit; }
+  .flow text.sub2 { font-size: 10px; fill: var(--muted); }
+  .flow path { fill: none; stroke: var(--muted); stroke-width: 1.25; }
+  .flow marker path { fill: var(--muted); stroke: none; }
+  .flow figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  .skills { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; padding: 0; list-style: none; }
+  .skills li { font-size: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; }
+  h2.h2s { font-size: 20px; }
+  .creds { margin: 0; padding-left: 18px; }
+  .creds li { margin: 4px 0; }
+
+  .contact { text-align: center; }
+  .contact .sub { margin: 0 auto; }
+  .contact .actions { justify-content: center; margin-top: 18px; }
+  footer { text-align: center; font-size: 12px; color: var(--muted); padding: 24px 20px 40px; }
+
+  /* Sample reports (rebuilt with made-up data) */
+  figure.report { margin: 0 0 22px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .rpt-head { display: flex; justify-content: space-between; align-items: center; gap: 4px 10px; flex-wrap: wrap;
+    padding: 11px 16px; border-bottom: 1px solid var(--line); background: var(--band); }
+  .rpt-title { font-weight: 700; font-size: 16px; }
+  .rpt-tag { font-size: 12px; color: var(--muted); }
+  .rpt-body { padding: 14px 16px 12px; }
+  .slicers { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 0 0 12px; font-size: 12px; }
+  .ctx { color: var(--muted); }
+  .ctx b { color: var(--text); font-weight: 600; }
+  .grp { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .btn-f { font: inherit; font-size: 12px; color: var(--text); background: var(--bg); cursor: pointer;
+    border: 1px solid var(--ctl); border-radius: 6px; padding: 4px 10px; min-height: 30px; min-width: 34px; }
+  .btn-f:hover { border-color: var(--text); }
+  .btn-f[aria-pressed="true"] { border-color: var(--text); box-shadow: inset 0 0 0 1px var(--text); font-weight: 600; }
+  .tiles { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin: 0 0 12px; }
+  .tiles.t4 { grid-template-columns: repeat(4, 1fr); }
+  .tile { border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; background: var(--bg); min-width: 0; }
+  .tile span { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+  .tile b { font-size: 18px; }
+  .tbl-wrap { overflow-x: auto; }
+  table.rt { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .rt th { text-align: left; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--line); padding: 6px 8px; white-space: nowrap; }
+  .rt td { padding: 5px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .rt .n { text-align: right; font-variant-numeric: tabular-nums; }
+  .rt tfoot td { font-weight: 700; border-top: 2px solid var(--line); border-bottom: none; }
+  .rt .over { color: var(--crit-text); font-weight: 600; }
+  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .chart { min-width: 0; }
+  .chart h4 { margin: 0 0 6px; font-size: 13px; font-weight: 600; }
+  .chart svg { display: block; width: 100%; height: 190px; border-radius: 6px; }
+  .chart svg:focus:not(:focus-visible) { outline: none; }
+  .chart svg text { font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+  .chart svg .lbl { fill: var(--text); font-weight: 600; }
+  .chart svg line { stroke: var(--grid); stroke-width: 1; }
+  .chart svg line.base { stroke: var(--line); }
+  .chart rect.hit { fill: transparent; }
+  .chart g.bar path { fill: var(--bar); }
+  .chart g.bar.hot path { fill: var(--bar-hi); }
+  .chart g.bar.hot rect.hit { fill: var(--text); fill-opacity: .05; }
+  details.dt { margin: 10px 0 0; font-size: 12px; }
+  details.dt summary { cursor: pointer; color: var(--muted); width: max-content; }
+  details.dt summary:hover { color: var(--text); }
+  details.dt .charts { margin-top: 8px; }
+  figure.report figcaption { font-size: 13px; color: var(--muted); padding: 0 16px 14px; }
+  .status { display: inline-flex; align-items: center; gap: 6px; }
+  .status i { width: 15px; height: 15px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-style: normal; font-size: 10px; font-weight: 700; color: #fff; }
+  .status.ok i { background: var(--good); }
+  .status.stale i { background: var(--warn); color: #1a1300; }
+  .status.fail i { background: var(--crit); }
+  #tip { position: fixed; pointer-events: none; background: var(--text); color: var(--bg); font-size: 12px;
+    padding: 5px 9px; border-radius: 6px; display: none; z-index: 20; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+  #tip b { font-weight: 700; margin-right: 6px; }
+  #tip span { opacity: .75; }
+
+  @media (max-width: 760px) {
+    .tiles, .tiles.t4 { grid-template-columns: repeat(2, 1fr); }
+    .charts { grid-template-columns: 1fr; }
+    .hide-sm { display: none; }
+    .hero { padding: 36px 0 32px; }
+    .hero .wrap, .grid2 { grid-template-columns: 1fr; }
+    h1 { font-size: 32px; }
+    .lede { font-size: 16px; }
+    nav .links a:not(.btn) { display: none; }
+    section { padding: 36px 0; }
+    .card { padding: 18px 16px; }
+    .rpt-body { padding: 12px 12px 10px; }
+    .rt th, .rt td { padding-left: 6px; padding-right: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<nav aria-label="Sections">
+  <div class="wrap">
+    <span class="name">Austin Lewis</span>
+    <div class="links">
+      <a href="#work">BI work</a>
+      <a href="#samples">Samples</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <a class="btn" href="assets/Austin%20Lewis%20Resume.pdf" target="_blank" rel="noopener">Resume</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Open to remote roles &middot; Denver, CO</span>
+      <h1>Senior Power BI Developer</h1>
+      <p class="lede">I build semantic models people trust, and I automate the work around them with Python and AI.</p>
+      <ul class="chips" aria-label="Core tools">
+        <li>Power BI</li><li>DAX</li><li>Snowflake</li><li>Azure BI</li><li>SQL</li><li>Python</li><li>Copilot</li>
+      </ul>
+      <div class="actions">
+        <a class="btn" href="#work">See the work</a>
+        <a class="btn ghost" href="assets/Austin%20Lewis%20Resume.pdf" target="_blank" rel="noopener">Download resume</a>
+        <a class="btn ghost" href="https://www.linkedin.com/in/austin-lewis/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>8+</b><span>Years building Power BI</span></div>
+      <div class="stat"><b>30+</b><span>External clients on one secured platform</span></div>
+      <div class="stat"><b>6</b><span>Industries, from retail to aerospace</span></div>
+      <div class="stat"><b>~15 hrs</b><span>A month of manual tracking automated (estimate)</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="work" class="alt">
+  <div class="wrap">
+    <h2>BI work</h2>
+    <p class="sub">Client dashboards are confidential, so this section describes the work. The <a href="#samples">sample reports</a> below are rebuilt with made-up data.</p>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Senior Power BI Engineer, Abercrombie &amp; Fitch</h3>
+        <span class="meta">2023 - 2026 &middot; Remote</span>
+      </div>
+      <ul>
+        <li><b>Largest BI initiative in a decade:</b> core developer on COMET, the migration that replaced legacy dashboards across the company.</li>
+        <li><b>Snowflake star schemas:</b> DAX semantic models with row-level security and incremental refresh, so teams answer their own questions instead of filing tickets.</li>
+        <li><b>Copilot and Q&amp;A:</b> natural-language querying, plus Key Influencers and decomposition trees to show what is driving a metric.</li>
+      </ul>
+      <div class="tags"><span>Power BI</span><span>DAX</span><span>Snowflake</span><span>Tabular Editor</span><span>Copilot</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Power BI Developer, Halliburton</h3>
+        <span class="meta">2020 - 2021 &middot; Hybrid</span>
+      </div>
+      <ul>
+        <li><b>30+ external clients:</b> helped build a customer-facing platform over 20K+ frac stages of data, with row-level security keeping each client's data apart.</li>
+        <li><b>Usage monitoring:</b> Azure Blob tracking of who used which reports, to steer what got built next.</li>
+      </ul>
+      <div class="tags"><span>Power BI</span><span>Row-level security</span><span>Azure Data Factory</span><span>SQL</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Senior Software Engineer, Insight Enterprises</h3>
+        <span class="meta">2022 - 2023 &middot; Remote</span>
+      </div>
+      <ul>
+        <li><b>10+ client dashboards:</b> KPI frameworks and semantic models for clients across industries.</li>
+        <li><b>AI visuals:</b> anomaly detection and Key Influencers to surface outliers clients would have missed.</li>
+      </ul>
+      <div class="tags"><span>Power BI</span><span>DAX</span><span>Azure DevOps</span></div>
+    </div>
+
+    <p class="earlier">Earlier: BI Developer at Computershare (2021 - 2022), Data Analyst II at Sierra Nevada Corporation (2018 - 2020), and Power BI contracts for grocery and construction clients. Full history is on the <a href="assets/Austin%20Lewis%20Resume.pdf" target="_blank" rel="noopener">resume</a>.</p>
+  </div>
+</section>
+
+<section id="samples">
+  <div class="wrap">
+    <h2>Sample reports</h2>
+    <p class="sub">Rebuilt from reports I shipped, with made-up data and names. Hover or tap a bar, or tap a filter. Charts also work from the keyboard: Tab to one, then use the arrow keys.</p>
+
+    <figure class="report" aria-labelledby="bud-title">
+      <div class="rpt-head">
+        <span class="rpt-title" id="bud-title">Budget vs. Commitments</span>
+        <span class="rpt-tag">Aerospace program finance</span>
+      </div>
+      <div class="rpt-body">
+        <div class="slicers">
+          <span class="ctx">Program <b>2041</b></span>
+          <span class="ctx">All vendors</span>
+          <span class="ctx">All work packages</span>
+        </div>
+        <div class="tiles" id="bud-tiles"></div>
+        <div class="tbl-wrap">
+          <table class="rt" id="bud-table">
+            <caption class="sr-only">Budget, purchase orders and open requests by work package, made-up data</caption>
+            <thead><tr><th scope="col">Work package</th><th scope="col" class="hide-sm">Description</th><th scope="col" class="n">Baseline</th><th scope="col" class="n">PO cost</th>
+              <th scope="col" class="n hide-sm">Open PRs</th><th scope="col" class="n">Remaining</th></tr></thead>
+            <tbody></tbody><tfoot></tfoot>
+          </table>
+        </div>
+      </div>
+      <figcaption>Tracks each work package's budget against purchase orders and open requests, so program managers see what is left to spend and which package is over.</figcaption>
+    </figure>
+
+    <figure class="report" aria-labelledby="frac-title">
+      <div class="rpt-head">
+        <span class="rpt-title" id="frac-title">Completion Summary</span>
+        <span class="rpt-tag">Oilfield services, customer-facing</span>
+      </div>
+      <div class="rpt-body">
+        <div class="slicers">
+          <span class="ctx">Operator <b>Sample Energy Co.</b></span>
+          <span class="ctx">Sep 1 - Sep 28</span>
+          <span class="grp" id="pad-btns" role="group" aria-label="Filter by pad">
+            <span class="ctx">Pad</span>
+            <button type="button" class="btn-f" data-pad="A" aria-pressed="false" aria-label="Pad A">A</button>
+            <button type="button" class="btn-f" data-pad="B" aria-pressed="false" aria-label="Pad B">B</button>
+            <button type="button" class="btn-f" data-pad="C" aria-pressed="false" aria-label="Pad C">C</button>
+            <button type="button" class="btn-f" data-pad="D" aria-pressed="false" aria-label="Pad D">D</button>
+          </span>
+        </div>
+        <div class="tiles t4" id="frac-tiles"></div>
+        <div class="charts">
+          <div class="chart"><h4 id="frac-daily-h">Lateral length treated per day (ft)</h4><svg id="frac-daily" tabindex="0" role="img" aria-labelledby="frac-daily-h" aria-describedby="kbd-hint"></svg></div>
+          <div class="chart"><h4 id="frac-wells-h">Lateral length by well (ft)</h4><svg id="frac-wells" tabindex="0" role="img" aria-labelledby="frac-wells-h" aria-describedby="kbd-hint"></svg></div>
+        </div>
+        <details class="dt">
+          <summary>Data table</summary>
+          <div class="charts">
+            <table class="rt" id="frac-daily-tbl"><caption class="sr-only">Lateral feet treated per day</caption><thead><tr><th scope="col">Day</th><th scope="col" class="n">Feet treated</th></tr></thead><tbody></tbody></table>
+            <table class="rt" id="frac-wells-tbl"><caption class="sr-only">Lateral length and stages by well</caption><thead><tr><th scope="col">Well</th><th scope="col" class="n">Lateral ft</th><th scope="col" class="n">Stages</th></tr></thead><tbody></tbody></table>
+          </div>
+        </details>
+      </div>
+      <figcaption>Each customer sees only its own wells through row-level security; one report served 30+ operators.</figcaption>
+    </figure>
+
+    <figure class="report" aria-labelledby="sm-title">
+      <div class="rpt-head">
+        <span class="rpt-title" id="sm-title">Semantic Model Health</span>
+        <span class="rpt-tag">Retail BI governance</span>
+      </div>
+      <div class="rpt-body">
+        <div class="slicers">
+          <span class="grp" id="env-btns" role="group" aria-label="Filter by environment">
+            <span class="ctx">Environment</span>
+            <button type="button" class="btn-f" data-env="PROD" aria-pressed="false">PROD</button>
+            <button type="button" class="btn-f" data-env="PRE-PROD" aria-pressed="false">PRE-PROD</button>
+            <button type="button" class="btn-f" data-env="QA" aria-pressed="false">QA</button>
+          </span>
+        </div>
+        <div class="tiles t4" id="sm-tiles"></div>
+        <div class="tbl-wrap">
+          <table class="rt" id="sm-table">
+            <caption class="sr-only">Semantic models by environment with refresh status, made-up data</caption>
+            <thead><tr><th scope="col">Env</th><th scope="col" class="hide-sm">Platform</th><th scope="col">Semantic model</th><th scope="col" class="hide-sm">Workspace</th>
+              <th scope="col" class="hide-sm">Last refresh</th><th scope="col">Status</th><th scope="col" class="n">Size GB</th><th scope="col" class="n hide-sm">Issues</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <figcaption>One page that tells the BI team which models are failing, stale or growing, across every environment and data platform.</figcaption>
+    </figure>
+    <p id="kbd-hint" class="sr-only">Use the left and right arrow keys to move between bars. Home and End jump to the first and last bar.</p>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <h2>Home &amp; Rental Property Automation</h2>
+    <p class="sub">Personal project, Dec 2025 - Present. Scheduled programs and Claude agents that run a short-term rental's tracking unattended.</p>
+    <p class="thread">Prototype with Claude, then rebuild the stable parts as tested, deterministic Python.</p>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>Property Command Center</h3>
+        <figure class="flow">
+          <svg viewBox="0 0 360 132" role="img" aria-labelledby="flow-t">
+            <title id="flow-t">A ledger, a utility Sheet and an Airbnb tracker Sheet feed a Python build, which takes each month from one source and writes the HTML dashboard.</title>
+            <defs><marker id="ah" viewBox="0 0 6 6" refX="5.5" refY="3" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L6,3 L0,6 z"/></marker></defs>
+            <rect x="1" y="4" width="108" height="30" rx="6"/><text x="55" y="23">Ledger</text>
+            <rect x="1" y="51" width="108" height="30" rx="6"/><text x="55" y="70">Utility Sheet</text>
+            <rect x="1" y="98" width="108" height="30" rx="6"/><text x="55" y="117">Airbnb Sheet</text>
+            <path d="M109,19 C124,19 122,66 134,66"/>
+            <path d="M109,66 L134,66"/>
+            <path d="M109,113 C124,113 122,66 134,66"/>
+            <path d="M133,66 L142,66" marker-end="url(#ah)"/>
+            <rect class="key" x="146" y="44" width="116" height="44" rx="6"/><text x="204" y="63">Python build</text><text class="sub2" x="204" y="78">one source per month</text>
+            <path d="M262,66 L274,66" marker-end="url(#ah)"/>
+            <rect x="278" y="44" width="80" height="44" rx="6"/><text x="318" y="63">HTML</text><text x="318" y="78">dashboard</text>
+          </svg>
+          <figcaption>How it fits together. The dashboard holds private finances, so it is described, not shown.</figcaption>
+        </figure>
+        <dl class="pbr">
+          <dt>Problem</dt><dd>The money lived in a ledger, two Sheets and Airbnb payouts, with no single view.</dd>
+          <dt>Built</dt><dd>Python build pipeline and an HTML dashboard, with a defined seam so no month is ever counted twice.</dd>
+          <dt>Result</dt><dd>~2 hrs a month of reconciling by hand, gone.</dd>
+        </dl>
+        <div class="tags"><span>Python</span><span>Google Sheets API</span><span>HTML/JS</span></div>
+      </div>
+
+      <div class="card">
+        <h3>Utility bill tracker</h3>
+        <dl class="pbr">
+          <dt>Problem</dt><dd>A 57 KB AI prompt spent most of its length on workarounds for driving a browser.</dd>
+          <dt>Built</dt><dd>A Python program that pulls five utility bills daily and writes them to a Sheet, refusing any write unless the month and year both match.</dd>
+          <dt>Result</dt><dd>Running unattended daily since Aug 2026; ~1.5 hrs a month of portal logins gone.</dd>
+        </dl>
+        <div class="tags"><span>Python</span><span>Playwright</span><span>Sheets API</span></div>
+      </div>
+
+      <div class="card">
+        <h3>Airbnb tracker sync</h3>
+        <dl class="pbr">
+          <dt>Problem</dt><dd>Bookings had to be copied into a tracker Sheet by an AI task every day.</dd>
+          <dt>Built</dt><dd>A daily program that plans each change before writing it, and exits non-zero on any anomaly so the monitor catches it.</dd>
+          <dt>Result</dt><dd>Replaced the AI task; runs at roughly zero token cost.</dd>
+        </dl>
+        <div class="tags"><span>Python</span><span>Sheets API</span><span>Task Scheduler</span></div>
+      </div>
+
+      <div class="card">
+        <h3>Task monitor and run reaper</h3>
+        <dl class="pbr">
+          <dt>Problem</dt><dd>Six hung AI runs piled up over three days, burned ~2.5 CPU-hours and blocked new jobs.</dd>
+          <dt>Built</dt><dd>A daily health check that emails only on trouble, plus an hourly reaper that finds hung runs by command line.</dd>
+          <dt>Result</dt><dd>Hung runs clean themselves up; a failed job reaches the inbox the same day.</dd>
+        </dl>
+        <div class="tags"><span>Python</span><span>PowerShell</span><span>Gmail API</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="alt">
+  <div class="wrap">
+    <h2>Skills</h2>
+    <ul class="skills">
+      <li>Power BI</li><li>DAX</li><li>Power Query (M)</li><li>Snowflake</li><li>SQL / T-SQL</li><li>Azure Data Factory</li>
+      <li>SSAS / SSIS / SSRS</li><li>Python</li><li>Google Workspace APIs</li><li>Claude</li><li>Copilot</li>
+    </ul>
+    <h2 class="h2s">Certifications and education</h2>
+    <ul class="creds">
+      <li>AI Fluency: Framework &amp; Foundations - Anthropic, Aug 2026</li>
+      <li>Claude 101 - Anthropic, Aug 2026</li>
+      <li>B.S. Mathematics - University of Colorado Boulder</li>
+    </ul>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <h2>Let's talk</h2>
+    <p class="sub">Looking for a remote Senior Power BI / BI Developer role.</p>
+    <div class="actions">
+      <a class="btn" href="mailto:austin.lewis23@gmail.com">Email me</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/austin-lewis/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn ghost" href="assets/Austin%20Lewis%20Resume.pdf" target="_blank" rel="noopener">Resume PDF</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>Austin Lewis &middot; Denver, CO &middot; Every number in the sample reports is made up.</footer>
+
+<div id="tip" aria-hidden="true"></div>
+<p id="live" class="sr-only" aria-live="polite"></p>
+<script>
+(function () {
+  "use strict";
+  // Every number and name in the three sample reports is made up.
+  const $ = (s) => document.querySelector(s);
+  const num = (v) => Math.round(v).toLocaleString("en-US");
+  const r2 = (v) => Math.round(v * 100) / 100;
+  const m1 = (v) => (v < 0 ? "-" : "") + "$" + Math.abs(v).toFixed(1) + "M";
+  const m2 = (v) => { const x = r2(v); return (x < 0 ? "-" : "") + "$" + Math.abs(x).toFixed(2) + "M"; };
+  const tiles = (box, items) => { box.innerHTML = items.map(([k, v]) => `<div class="tile"><span>${k}</span><b>${v}</b></div>`).join(""); };
+  const press = (box, attr, val) => box.querySelectorAll(".btn-f").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset[attr] === val)));
+
+  // Seeded random, so the sample data is the same on every load.
+  let seed = 2041;
+  const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+
+  // ---- 1. Budget vs. Commitments ------------------------------------------
+  // [id, description, baseline, PO cost, open PRs, accrued] in $M
+  const wps = [
+    ["WP 1.1", "Systems engineering", 7.8, 5.9, 0.12, 5.4],
+    ["WP 1.2", "Avionics integration", 9.4, 6.1, 0.08, 5.7],
+    ["WP 1.3", "Ground support equipment", 4.2, 3.9, 0.00, 3.6],
+    ["WP 1.4", "Flight test", 6.5, 2.2, 0.05, 1.8],
+    ["WP 1.5", "Structures", 8.9, 9.1, 0.10, 8.2],
+    ["WP 1.6", "Flight software", 5.1, 3.0, 0.03, 2.6],
+    ["WP 1.7", "Logistics support", 3.3, 1.9, 0.02, 1.5],
+    ["WP 1.8", "Program management", 3.0, 1.3, 0.00, 1.2]
+  ];
+  const tot = (i) => r2(wps.reduce((a, row) => a + row[i], 0));
+  const [B, P, R, A] = [2, 3, 4, 5].map(tot);
+  const REM = r2(B - P - R);
+  tiles($("#bud-tiles"), [["Baseline", m1(B)], ["PO cost", m1(P)], ["Open PRs", m1(R)],
+    ["Remaining", m1(REM)], ["Accrued", m1(A)], ["Complete", Math.round(A / B * 100) + "%"]]);
+  $("#bud-table tbody").innerHTML = wps.map(([id, d, b, p, r]) => {
+    const rem = r2(b - p - r);
+    return `<tr><td>${id}</td><td class="hide-sm">${d}</td><td class="n">${m2(b)}</td><td class="n">${m2(p)}</td>
+      <td class="n hide-sm">${m2(r)}</td><td class="n${rem < 0 ? " over" : ""}">${m2(rem)}${rem < 0 ? " over" : ""}</td></tr>`;
+  }).join("");
+  $("#bud-table tfoot").innerHTML = `<tr><td>Total</td><td class="hide-sm"></td><td class="n">${m2(B)}</td><td class="n">${m2(P)}</td>
+    <td class="n hide-sm">${m2(R)}</td><td class="n">${m2(REM)}</td></tr>`;
+
+  // ---- 2. Completion Summary ----------------------------------------------
+  // Four pads of four wells, one pad per week. Each pad's lateral feet are
+  // spread across its seven days, so the two charts always tie out.
+  const PADS = ["A", "B", "C", "D"];
+  const wells = [];
+  PADS.forEach((p) => {
+    for (let w = 1; w <= 4; w++) {
+      const ft = Math.round((6800 + rnd() * 3600) / 10) * 10;
+      wells.push({ pad: p, label: `Pad ${p} ${w}H`, value: ft, stages: Math.round(ft / 240) });
+    }
+  });
+  const days = Array.from({ length: 28 }, (_, i) => ({ label: "9/" + (i + 1), byPad: { A: 0, B: 0, C: 0, D: 0 } }));
+  PADS.forEach((p, pi) => {
+    const padFt = wells.filter((w) => w.pad === p).reduce((a, w) => a + w.value, 0);
+    const wt = Array.from({ length: 7 }, () => 0.6 + rnd());
+    const wsum = wt.reduce((a, b) => a + b, 0);
+    let left = padFt;
+    wt.forEach((x, k) => {
+      const v = k === 6 ? left : Math.round(padFt * x / wsum / 10) * 10;
+      days[pi * 7 + k].byPad[p] = v; left -= v;
+    });
+  });
+
+  let pad = null;
+  function niceStep(max) {
+    const raw = max / 4, p10 = Math.pow(10, Math.floor(Math.log10(raw))), m = raw / p10;
+    return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 2.5 ? 2.5 : m <= 5 ? 5 : 10) * p10;
+  }
+  const kfmt = (v) => (v >= 1000 ? +(v / 1000).toFixed(1) + "K" : String(v));
+
+  function bars(svg, data, every, unit) {
+    const W = Math.max(svg.clientWidth, 200), H = 190, l = 40, r = 6, t = 18, b = 22;
+    const max = Math.max(1, ...data.map((d) => d.value)), stepY = niceStep(max), top = Math.ceil(max / stepY) * stepY;
+    const n = data.length, slot = (W - l - r) / n, bw = Math.min(24, Math.max(slot - 2, 1));
+    const y = (v) => t + (H - t - b) * (1 - v / top);
+    let s = "";
+    for (let g = 0; g <= top + 1e-9; g += stepY) {
+      s += `<line class="${g ? "" : "base"}" x1="${l}" x2="${W - r}" y1="${y(g)}" y2="${y(g)}"/>` +
+           `<text x="${l - 6}" y="${y(g) + 4}" text-anchor="end">${kfmt(g)}</text>`;
+    }
+    const maxIdx = data.findIndex((d) => d.value === max);
+    data.forEach((d, i) => {
+      const x = l + i * slot + (slot - bw) / 2, yt = y(d.value), yb = y(0), rad = Math.min(4, bw / 2, yb - yt);
+      const path = d.value > 0
+        ? `<path d="M${x},${yb} V${yt + rad} Q${x},${yt} ${x + rad},${yt} H${x + bw - rad} Q${x + bw},${yt} ${x + bw},${yt + rad} V${yb} Z"/>`
+        : "";
+      s += `<g class="bar" data-v="${num(d.value)} ${unit}" data-l="${d.label}">${path}` +
+           `<rect class="hit" x="${l + i * slot}" y="${t}" width="${slot}" height="${H - t - b}"/></g>`;
+      if (i % every === 0) {
+        const cx = x + bw / 2, edge = cx > W - r - 30;
+        s += `<text x="${edge ? W - r : cx}" y="${H - 6}" text-anchor="${edge ? "end" : "middle"}">${d.label}</text>`;
+      }
+      if (i === maxIdx && d.value > 0) s += `<text class="lbl" x="${x + bw / 2}" y="${yt - 5}" text-anchor="middle">${(d.value / 1000).toFixed(1)}K</text>`;
+    });
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    svg.innerHTML = s;
+  }
+
+  function drawFrac() {
+    const ws = wells.filter((w) => !pad || w.pad === pad).slice().sort((a, b) => b.value - a.value);
+    const ds = days.map((d) => ({ label: d.label, value: pad ? d.byPad[pad] : PADS.reduce((a, p) => a + d.byPad[p], 0) }));
+    const ft = ds.reduce((a, d) => a + d.value, 0), worked = ds.filter((d) => d.value > 0).length;
+    tiles($("#frac-tiles"), [["Wells", ws.length], ["Stages", num(ws.reduce((a, w) => a + w.stages, 0))],
+      ["Feet treated", num(ft)], ["Avg ft / frac day", num(ft / worked)]]);
+    setHot(null); hideTip();
+    const narrow = $("#frac-wells").clientWidth < 420;
+    bars($("#frac-daily"), ds, narrow ? 7 : 4, "ft");
+    bars($("#frac-wells"), ws, ws.length <= 4 ? 1 : (narrow ? 5 : 3), "ft");
+    $("#frac-daily").setAttribute("aria-label", `Bar chart, ${num(ft)} lateral feet treated over ${worked} days`);
+    $("#frac-wells").setAttribute("aria-label", `Bar chart of lateral length for ${ws.length} wells`);
+    $("#frac-daily-tbl tbody").innerHTML = ds.map((d) => `<tr><td>${d.label}</td><td class="n">${num(d.value)}</td></tr>`).join("");
+    $("#frac-wells-tbl tbody").innerHTML = ws.map((w) => `<tr><td>${w.label}</td><td class="n">${num(w.value)}</td><td class="n">${w.stages}</td></tr>`).join("");
+    press($("#pad-btns"), "pad", pad);
+  }
+  $("#pad-btns").addEventListener("click", (ev) => {
+    const b = ev.target.closest(".btn-f"); if (!b) return;
+    pad = pad === b.dataset.pad ? null : b.dataset.pad;  // tap again to clear; nothing on = all
+    drawFrac();
+  });
+
+  // ---- 3. Semantic Model Health -------------------------------------------
+  const area = { "Sales Performance": "Sales", "Daily Sales": "Sales", "Inventory Health": "Merchandising",
+    "Markdown Planning": "Merchandising", "Customer Analysis": "Marketing", "Store Labor": "Stores", "Supply Chain Flow": "Supply Chain" };
+  const models = [
+    ["PROD", "Databricks", "Markdown Planning", "10/22 3:09 AM", "ok", 0.12, 0],
+    ["PROD", "Snowflake", "Sales Performance", "10/22 4:41 AM", "ok", 6.84, 3],
+    ["PROD", "Snowflake", "Inventory Health", "10/22 5:02 AM", "ok", 4.10, 12],
+    ["PROD", "Snowflake", "Customer Analysis", "10/22 5:15 AM", "ok", 3.92, 0],
+    ["PROD", "Oracle", "Store Labor", "10/20 11:40 PM", "stale", 2.37, 5],
+    ["PROD", "Snowflake", "Supply Chain Flow", "10/22 6:00 AM", "fail", 9.61, 21],
+    ["PROD", "Snowflake", "Daily Sales", "10/22 4:30 AM", "ok", 0.08, 0],
+    ["PRE-PROD", "Databricks", "Markdown Planning", "10/22 2:55 AM", "ok", 0.11, 0],
+    ["PRE-PROD", "Snowflake", "Sales Performance", "10/21 1:10 AM", "stale", 6.79, 4],
+    ["PRE-PROD", "Snowflake", "Inventory Health", "10/22 4:58 AM", "ok", 4.06, 9],
+    ["PRE-PROD", "Snowflake", "Supply Chain Flow", "10/22 5:44 AM", "ok", 9.33, 18],
+    ["PRE-PROD", "Oracle", "Store Labor", "10/22 5:20 AM", "ok", 2.31, 5],
+    ["QA", "Snowflake", "Sales Performance", "10/22 6:12 AM", "ok", 1.02, 2],
+    ["QA", "Snowflake", "Supply Chain Flow", "10/21 9:30 PM", "fail", 0.97, 7]
+  ];
+  const ST = { ok: ["&#10003;", "OK"], stale: ["!", "Stale"], fail: ["&#10005;", "Failed"] };
+  let env = null;
+  function drawModels() {
+    const rows = models.filter((m) => !env || m[0] === env);
+    const count = (s) => rows.filter((m) => m[4] === s).length;
+    tiles($("#sm-tiles"), [["Models", rows.length], ["Failed", count("fail")], ["Stale", count("stale")],
+      ["Total size", rows.reduce((a, m) => a + m[5], 0).toFixed(1) + " GB"]]);
+    $("#sm-table tbody").innerHTML = rows.map(([e, p, m, when, st, gb, iss]) =>
+      `<tr><td>${e}</td><td class="hide-sm">${p}</td><td>${m}</td><td class="hide-sm">Retail BI - ${area[m]} [${e}]</td><td class="hide-sm">${when}</td>
+       <td><span class="status ${st}"><i aria-hidden="true">${ST[st][0]}</i>${ST[st][1]}</span></td><td class="n">${gb.toFixed(2)}</td><td class="n hide-sm">${iss}</td></tr>`).join("");
+    press($("#env-btns"), "env", env);
+  }
+  $("#env-btns").addEventListener("click", (ev) => {
+    const b = ev.target.closest(".btn-f"); if (!b) return;
+    env = env === b.dataset.env ? null : b.dataset.env;  // tap again to clear; nothing on = all
+    drawModels();
+  });
+
+  // ---- Shared tooltip: pointer, touch and keyboard ------------------------
+  const tip = $("#tip"), live = $("#live");
+  let hot = null;
+  function setHot(g) {
+    if (hot && hot !== g) hot.classList.remove("hot");
+    hot = g; if (g) g.classList.add("hot");
+  }
+  function hideTip() { tip.style.display = "none"; }
+  function showTip(g, x, y) {
+    const v = document.createElement("b"); v.textContent = g.dataset.v;   // value leads
+    const k = document.createElement("span"); k.textContent = g.dataset.l;
+    tip.replaceChildren(v, k);
+    tip.style.display = "block";
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    tip.style.left = Math.max(8, Math.min(x - w / 2, innerWidth - w - 8)) + "px";
+    tip.style.top = (y - h - 12 < 8 ? y + 16 : y - h - 12) + "px";
+  }
+  function onPointer(ev) {
+    const g = ev.target.closest && ev.target.closest(".chart g.bar");
+    if (!g) { setHot(null); hideTip(); return; }
+    setHot(g); showTip(g, ev.clientX, ev.clientY);
+  }
+  document.addEventListener("pointermove", onPointer);
+  document.addEventListener("pointerdown", onPointer);
+  // The tooltip is fixed to the viewport, so any scroll would leave it behind.
+  window.addEventListener("scroll", () => { if (hot) { setHot(null); hideTip(); } }, { passive: true });
+
+  function focusBar(g) {
+    setHot(g);
+    const box = (g.querySelector("path") || g.querySelector("rect.hit")).getBoundingClientRect();
+    showTip(g, box.left + box.width / 2, box.top);
+    live.textContent = g.dataset.l + ", " + g.dataset.v;
+  }
+  document.querySelectorAll(".chart svg").forEach((svg) => {
+    svg.addEventListener("keydown", (ev) => {
+      const gs = [...svg.querySelectorAll("g.bar")]; if (!gs.length) return;
+      let i = gs.indexOf(hot);
+      if (ev.key === "ArrowRight" || ev.key === "ArrowDown") i = i < 0 ? 0 : Math.min(i + 1, gs.length - 1);
+      else if (ev.key === "ArrowLeft" || ev.key === "ArrowUp") i = i < 0 ? 0 : Math.max(i - 1, 0);
+      else if (ev.key === "Home") i = 0;
+      else if (ev.key === "End") i = gs.length - 1;
+      else if (ev.key === "Escape") { setHot(null); hideTip(); return; }
+      else return;
+      ev.preventDefault(); focusBar(gs[i]);
+    });
+    svg.addEventListener("focus", () => {
+      if (!svg.matches(":focus-visible")) return;   // a tap focuses too; only keyboard gets the first bar
+      const g = svg.querySelector("g.bar"); if (g) focusBar(g);
+    });
+    svg.addEventListener("blur", () => { setHot(null); hideTip(); });
+  });
+
+  drawModels();
+  drawFrac();
+  let rz, lastW = innerWidth;
+  window.addEventListener("resize", () => {
+    if (innerWidth === lastW) return;   // phone toolbars change only the height
+    lastW = innerWidth; clearTimeout(rz); rz = setTimeout(drawFrac, 120);
+  });
+})();
+</script>
+
+</body>
+</html>
