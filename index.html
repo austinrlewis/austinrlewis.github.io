@@ -173,7 +173,7 @@
   details.dt summary { cursor: pointer; color: var(--muted); width: max-content; }
   details.dt summary:hover { color: var(--text); }
   details.dt .charts { margin-top: 8px; }
-  figure.report figcaption { font-size: 13px; color: var(--muted); padding: 0 16px 14px; }
+  figure.report figcaption { font-size: 13px; color: var(--muted); padding: 12px 16px 0; max-width: 62em; }
   .status { display: inline-flex; align-items: center; gap: 6px; }
   .status i { width: 15px; height: 15px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
     font-style: normal; font-size: 10px; font-weight: 700; color: #fff; }
@@ -326,6 +326,7 @@
         <span class="rpt-title" id="bud-title">Budget vs. Commitments</span>
         <span class="rpt-tag">Aerospace program finance</span>
       </div>
+      <figcaption>Tracks each work package's budget against purchase orders and open requests, so program managers see what is left to spend and which package is over.</figcaption>
       <div class="rpt-body">
         <div class="slicers">
           <span class="ctx">Program <b>2041</b></span>
@@ -342,7 +343,6 @@
           </table>
         </div>
       </div>
-      <figcaption>Tracks each work package's budget against purchase orders and open requests, so program managers see what is left to spend and which package is over.</figcaption>
     </figure>
 
     <figure class="report" aria-labelledby="frac-title">
@@ -350,6 +350,7 @@
         <span class="rpt-title" id="frac-title">Completion Summary</span>
         <span class="rpt-tag">Oilfield services, customer-facing</span>
       </div>
+      <figcaption>Each customer sees only its own wells through row-level security; one report served 30+ operators.</figcaption>
       <div class="rpt-body">
         <div class="slicers">
           <span class="ctx">Operator <b>Sample Energy Co.</b></span>
@@ -375,7 +376,6 @@
           </div>
         </details>
       </div>
-      <figcaption>Each customer sees only its own wells through row-level security; one report served 30+ operators.</figcaption>
     </figure>
 
     <figure class="report" aria-labelledby="sm-title">
@@ -383,6 +383,7 @@
         <span class="rpt-title" id="sm-title">Semantic Model Metadata</span>
         <span class="rpt-tag">Retail BI governance &middot; 7 report pages</span>
       </div>
+      <figcaption>A semantic model I built to track every other semantic model in the Power BI Service workspaces. It pulls all of their metadata (tables, columns, measures, relationships, connections, storage and refreshes) into one place, so the BI team can see which models are failing or stale, where each one connects, and what differs between PROD and QA before a release.</figcaption>
       <div class="rpt-body">
         <div class="pg-tabs" role="tablist" aria-label="Report pages" id="sm-tabs">
           <button type="button" class="pg-tab" role="tab" id="t-info" aria-controls="pg-info" aria-selected="true">Model Info</button>
@@ -497,7 +498,6 @@
           </div>
         </div>
       </div>
-      <figcaption>A semantic model I built to track every other semantic model in the Power BI Service workspaces. It pulls all of their metadata (tables, columns, measures, relationships, connections, storage and refreshes) into one place, so the BI team can see which models are failing or stale, where each one connects, and what differs between PROD and QA before a release.</figcaption>
     </figure>
     <p id="kbd-hint" class="sr-only">Use the left and right arrow keys to move between bars. Home and End jump to the first and last bar.</p>
   </div>
