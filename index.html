@@ -322,105 +322,6 @@
     <h2>Sample reports</h2>
     <p class="sub">Recreations of Power BI reports I built at previous jobs. The originals hold client data, so each one is redrawn here with made-up numbers and names. Each keeps the original's purpose and general layout, simplified. Happy to walk through the real designs in an interview. Hover or tap a bar, or tap a filter; charts also work from the keyboard (Tab to one, then use the arrow keys).</p>
 
-    <figure class="report" aria-labelledby="bud-title">
-      <div class="rpt-head">
-        <span class="rpt-title" id="bud-title">Budget vs. Commitments</span>
-        <span class="rpt-tag">Aerospace program finance</span>
-      </div>
-      <figcaption>Tracks each work package's budget against purchase orders and open requests, so program managers see what is left to spend and which package is over.</figcaption>
-      <div class="rpt-body">
-        <div class="slicers">
-          <span class="ctx">Program <b>2041</b></span>
-          <span class="ctx">All vendors</span>
-          <span class="ctx">All work packages</span>
-        </div>
-        <div class="tiles" id="bud-tiles"></div>
-        <div class="tbl-wrap">
-          <table class="rt" id="bud-table">
-            <caption class="sr-only">Budget, purchase orders and open requests by work package, made-up data</caption>
-            <thead><tr><th scope="col">Work package</th><th scope="col" class="hide-sm">Description</th><th scope="col" class="n">Baseline</th><th scope="col" class="n">PO cost</th>
-              <th scope="col" class="n hide-sm">Open PRs</th><th scope="col" class="n">Remaining</th></tr></thead>
-            <tbody></tbody><tfoot></tfoot>
-          </table>
-        </div>
-      </div>
-    </figure>
-
-    <figure class="report" aria-labelledby="frac-title">
-      <div class="rpt-head">
-        <span class="rpt-title" id="frac-title">Completion Operations</span>
-        <span class="rpt-tag">Oilfield services &middot; 3 report pages</span>
-      </div>
-      <figcaption>A frac completions report. The customer-facing summary uses row-level security so each operator sees only its own wells; one report served 30+ operators. Internal pages check every uploaded treatment for bad field data and track proppant on location so crews don't run short.</figcaption>
-      <div class="rpt-body">
-        <div class="pg-tabs" role="tablist" aria-label="Report pages" id="frac-tabs">
-          <button type="button" class="pg-tab" role="tab" id="f-sum" aria-controls="fp-sum" aria-selected="true">Completion Summary</button>
-          <button type="button" class="pg-tab" role="tab" id="f-dq" aria-controls="fp-dq" aria-selected="false" tabindex="-1">Data Quality</button>
-          <button type="button" class="pg-tab" role="tab" id="f-prop" aria-controls="fp-prop" aria-selected="false" tabindex="-1">Proppant Inventory</button>
-        </div>
-        <div class="pg" role="tabpanel" id="fp-sum" aria-labelledby="f-sum">
-        <div class="slicers">
-          <span class="ctx">Operator <b>Sample Energy Co.</b></span>
-          <span class="ctx">Sep 1 - Sep 28</span>
-          <span class="grp" id="pad-btns" role="group" aria-label="Filter by pad">
-            <span class="ctx">Pad</span>
-            <button type="button" class="btn-f" data-pad="A" aria-pressed="false" aria-label="Pad A">A</button>
-            <button type="button" class="btn-f" data-pad="B" aria-pressed="false" aria-label="Pad B">B</button>
-            <button type="button" class="btn-f" data-pad="C" aria-pressed="false" aria-label="Pad C">C</button>
-            <button type="button" class="btn-f" data-pad="D" aria-pressed="false" aria-label="Pad D">D</button>
-          </span>
-        </div>
-        <div class="tiles t4" id="frac-tiles"></div>
-        <div class="charts">
-          <div class="chart"><h4 id="frac-daily-h">Lateral length treated per day (ft)</h4><svg id="frac-daily" tabindex="0" role="img" aria-labelledby="frac-daily-h" aria-describedby="kbd-hint"></svg></div>
-          <div class="chart"><h4 id="frac-wells-h">Lateral length by well (ft)</h4><svg id="frac-wells" tabindex="0" role="img" aria-labelledby="frac-wells-h" aria-describedby="kbd-hint"></svg></div>
-        </div>
-        <details class="dt">
-          <summary>Data table</summary>
-          <div class="charts">
-            <table class="rt" id="frac-daily-tbl"><caption class="sr-only">Lateral feet treated per day</caption><thead><tr><th scope="col">Day</th><th scope="col" class="n">Feet treated</th></tr></thead><tbody></tbody></table>
-            <table class="rt" id="frac-wells-tbl"><caption class="sr-only">Lateral length and stages by well</caption><thead><tr><th scope="col">Well</th><th scope="col" class="n">Lateral ft</th><th scope="col" class="n">Stages</th></tr></thead><tbody></tbody></table>
-          </div>
-        </details>
-        </div>
-
-        <div class="pg" role="tabpanel" id="fp-dq" aria-labelledby="f-dq" hidden>
-          <div class="tiles t4" id="dq-tiles"></div>
-          <div class="split">
-            <div>
-              <h4 class="sub-h">Issues by check</h4>
-              <div class="hb" id="dq-bars"></div>
-              <p class="note">Every treatment upload runs these checks, for example a well more than 5 miles from its pad, or an average pressure above the maximum.</p>
-            </div>
-            <div class="tbl-wrap">
-              <table class="rt" id="dq-table">
-                <caption class="sr-only">Crews ranked by data issues, made-up crews and counts</caption>
-                <thead><tr><th scope="col">Crew</th><th scope="col" class="n">Treatments</th><th scope="col" class="n">Pre-job</th><th scope="col" class="n">Completed</th><th scope="col" class="n">Issue rate</th></tr></thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div class="pg" role="tabpanel" id="fp-prop" aria-labelledby="f-prop" hidden>
-          <div class="slicers">
-            <label class="ctx" for="prop-crew">Crew</label>
-            <select class="sel" id="prop-crew"></select>
-          </div>
-          <div class="tiles t4" id="prop-tiles"></div>
-          <div class="tbl-wrap">
-            <table class="rt" id="prop-table">
-              <caption class="sr-only">Proppant boxes on location and hours of supply, made-up data</caption>
-              <thead><tr><th scope="col">Proppant</th><th scope="col" class="n">Full</th><th scope="col" class="n">Partial</th><th scope="col" class="n hide-sm">Empty</th>
-                <th scope="col" class="n hide-sm">On location (lbs)</th><th scope="col" class="n hide-sm">Use per hour (lbs)</th><th scope="col">Hours of supply</th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-          <p class="note">Hours of supply = proppant on location / average use per hour over the last 10 hours. Under 12 hours is red and under 24 is amber, so a delivery gets scheduled in time.</p>
-        </div>
-      </div>
-    </figure>
-
     <figure class="report" aria-labelledby="sm-title">
       <div class="rpt-head">
         <span class="rpt-title" id="sm-title">Semantic Model Metadata</span>
@@ -542,6 +443,105 @@
         </div>
       </div>
     </figure>
+
+    <figure class="report" aria-labelledby="frac-title">
+      <div class="rpt-head">
+        <span class="rpt-title" id="frac-title">Completion Operations</span>
+        <span class="rpt-tag">Oilfield services &middot; 3 report pages</span>
+      </div>
+      <figcaption>A frac completions report. The customer-facing summary uses row-level security so each operator sees only its own wells; one report served 30+ operators. Internal pages check every uploaded treatment for bad field data and track proppant on location so crews don't run short.</figcaption>
+      <div class="rpt-body">
+        <div class="pg-tabs" role="tablist" aria-label="Report pages" id="frac-tabs">
+          <button type="button" class="pg-tab" role="tab" id="f-sum" aria-controls="fp-sum" aria-selected="true">Completion Summary</button>
+          <button type="button" class="pg-tab" role="tab" id="f-dq" aria-controls="fp-dq" aria-selected="false" tabindex="-1">Data Quality</button>
+          <button type="button" class="pg-tab" role="tab" id="f-prop" aria-controls="fp-prop" aria-selected="false" tabindex="-1">Proppant Inventory</button>
+        </div>
+        <div class="pg" role="tabpanel" id="fp-sum" aria-labelledby="f-sum">
+        <div class="slicers">
+          <span class="ctx">Operator <b>Sample Energy Co.</b></span>
+          <span class="ctx">Sep 1 - Sep 28</span>
+          <span class="grp" id="pad-btns" role="group" aria-label="Filter by pad">
+            <span class="ctx">Pad</span>
+            <button type="button" class="btn-f" data-pad="A" aria-pressed="false" aria-label="Pad A">A</button>
+            <button type="button" class="btn-f" data-pad="B" aria-pressed="false" aria-label="Pad B">B</button>
+            <button type="button" class="btn-f" data-pad="C" aria-pressed="false" aria-label="Pad C">C</button>
+            <button type="button" class="btn-f" data-pad="D" aria-pressed="false" aria-label="Pad D">D</button>
+          </span>
+        </div>
+        <div class="tiles t4" id="frac-tiles"></div>
+        <div class="charts">
+          <div class="chart"><h4 id="frac-daily-h">Lateral length treated per day (ft)</h4><svg id="frac-daily" tabindex="0" role="img" aria-labelledby="frac-daily-h" aria-describedby="kbd-hint"></svg></div>
+          <div class="chart"><h4 id="frac-wells-h">Lateral length by well (ft)</h4><svg id="frac-wells" tabindex="0" role="img" aria-labelledby="frac-wells-h" aria-describedby="kbd-hint"></svg></div>
+        </div>
+        <details class="dt">
+          <summary>Data table</summary>
+          <div class="charts">
+            <table class="rt" id="frac-daily-tbl"><caption class="sr-only">Lateral feet treated per day</caption><thead><tr><th scope="col">Day</th><th scope="col" class="n">Feet treated</th></tr></thead><tbody></tbody></table>
+            <table class="rt" id="frac-wells-tbl"><caption class="sr-only">Lateral length and stages by well</caption><thead><tr><th scope="col">Well</th><th scope="col" class="n">Lateral ft</th><th scope="col" class="n">Stages</th></tr></thead><tbody></tbody></table>
+          </div>
+        </details>
+        </div>
+
+        <div class="pg" role="tabpanel" id="fp-dq" aria-labelledby="f-dq" hidden>
+          <div class="tiles t4" id="dq-tiles"></div>
+          <div class="split">
+            <div>
+              <h4 class="sub-h">Issues by check</h4>
+              <div class="hb" id="dq-bars"></div>
+              <p class="note">Every treatment upload runs these checks, for example a well more than 5 miles from its pad, or an average pressure above the maximum.</p>
+            </div>
+            <div class="tbl-wrap">
+              <table class="rt" id="dq-table">
+                <caption class="sr-only">Crews ranked by data issues, made-up crews and counts</caption>
+                <thead><tr><th scope="col">Crew</th><th scope="col" class="n">Treatments</th><th scope="col" class="n">Pre-job</th><th scope="col" class="n">Completed</th><th scope="col" class="n">Issue rate</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="pg" role="tabpanel" id="fp-prop" aria-labelledby="f-prop" hidden>
+          <div class="slicers">
+            <label class="ctx" for="prop-crew">Crew</label>
+            <select class="sel" id="prop-crew"></select>
+          </div>
+          <div class="tiles t4" id="prop-tiles"></div>
+          <div class="tbl-wrap">
+            <table class="rt" id="prop-table">
+              <caption class="sr-only">Proppant boxes on location and hours of supply, made-up data</caption>
+              <thead><tr><th scope="col">Proppant</th><th scope="col" class="n">Full</th><th scope="col" class="n">Partial</th><th scope="col" class="n hide-sm">Empty</th>
+                <th scope="col" class="n hide-sm">On location (lbs)</th><th scope="col" class="n hide-sm">Use per hour (lbs)</th><th scope="col">Hours of supply</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="note">Hours of supply = proppant on location / average use per hour over the last 10 hours. Under 12 hours is red and under 24 is amber, so a delivery gets scheduled in time.</p>
+        </div>
+      </div>
+    </figure>
+
+    <figure class="report" aria-labelledby="bud-title">
+      <div class="rpt-head">
+        <span class="rpt-title" id="bud-title">Budget vs. Commitments</span>
+        <span class="rpt-tag">Aerospace program finance</span>
+      </div>
+      <figcaption>Tracks each work package's budget against purchase orders and open requests, so program managers see what is left to spend and which package is over.</figcaption>
+      <div class="rpt-body">
+        <div class="slicers">
+          <span class="ctx">Program <b>2041</b></span>
+          <span class="ctx">All vendors</span>
+          <span class="ctx">All work packages</span>
+        </div>
+        <div class="tiles" id="bud-tiles"></div>
+        <div class="tbl-wrap">
+          <table class="rt" id="bud-table">
+            <caption class="sr-only">Budget, purchase orders and open requests by work package, made-up data</caption>
+            <thead><tr><th scope="col">Work package</th><th scope="col" class="hide-sm">Description</th><th scope="col" class="n">Baseline</th><th scope="col" class="n">PO cost</th>
+              <th scope="col" class="n hide-sm">Open PRs</th><th scope="col" class="n">Remaining</th></tr></thead>
+            <tbody></tbody><tfoot></tfoot>
+          </table>
+        </div>
+      </div>
+    </figure>
     <p id="kbd-hint" class="sr-only">Use the left and right arrow keys to move between bars. Home and End jump to the first and last bar.</p>
   </div>
 </section>
@@ -606,6 +606,7 @@
           <dt>Problem</dt><dd>Six hung AI runs piled up over three days, burned ~2.5 CPU-hours and blocked new jobs.</dd>
           <dt>Built</dt><dd>A daily health check that emails only on trouble, plus an hourly reaper that finds hung runs by command line.</dd>
           <dt>Result</dt><dd>Hung runs clean themselves up; a failed job reaches the inbox the same day.</dd>
+          <dt>Code</dt><dd><a href="https://github.com/austinrlewis/claude-run-reaper">The reaper on GitHub</a>, with its 134 tests.</dd>
         </dl>
         <div class="tags"><span>Python</span><span>PowerShell</span><span>Gmail API</span></div>
       </div>
