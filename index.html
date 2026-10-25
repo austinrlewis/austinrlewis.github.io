@@ -185,7 +185,29 @@
   #tip b { font-weight: 700; margin-right: 6px; }
   #tip span { opacity: .75; }
 
+  /* Semantic Model Metadata: report pages, like the page tabs in Power BI */
+  .pg-tabs { display: flex; flex-wrap: wrap; gap: 2px; margin: 0 0 12px; border-bottom: 1px solid var(--line); }
+  .pg-tab { font: inherit; font-size: 12px; color: var(--muted); background: none; border: 0; cursor: pointer;
+    padding: 7px 11px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .pg-tab:hover { color: var(--text); }
+  .pg-tab[aria-selected="true"] { color: var(--text); font-weight: 600; border-bottom-color: var(--accent); }
+  .pg[hidden], .slicers[hidden] { display: none; }
+  .sel { font: inherit; font-size: 12px; color: var(--text); background: var(--bg); border: 1px solid var(--line);
+    border-radius: 6px; padding: 4px 8px; }
+  .rt td.zero { color: var(--good); font-weight: 600; }
+  .rt tr.pick { cursor: pointer; }
+  .rt tr.pick:hover td { background: var(--band); }
+  .rt tr.pick[aria-selected="true"] td { background: var(--band); font-weight: 600; }
+  .hb { display: grid; grid-template-columns: minmax(110px, 170px) 1fr 52px; gap: 5px 10px; align-items: center; font-size: 12px; margin: 6px 0 4px; }
+  .hb .tr { height: 12px; border-radius: 3px; background: var(--grid); overflow: hidden; }
+  .hb .tr i { display: block; height: 100%; background: var(--bar); border-radius: 3px; }
+  .hb .n { text-align: right; font-variant-numeric: tabular-nums; }
+  .note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+  .split { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
+  .split h4 { margin: 0 0 6px; font-size: 13px; font-weight: 600; }
+
   @media (max-width: 760px) {
+    .split { grid-template-columns: 1fr; }
     .tiles, .tiles.t4 { grid-template-columns: repeat(2, 1fr); }
     .charts { grid-template-columns: 1fr; }
     .hide-sm { display: none; }
@@ -248,7 +270,7 @@
 <section id="work" class="alt">
   <div class="wrap">
     <h2>BI work</h2>
-    <p class="sub">Client dashboards are confidential, so this section describes the work. The <a href="#samples">sample reports</a> below are rebuilt with made-up data.</p>
+    <p class="sub">Client dashboards are confidential, so this section describes the work. The <a href="#samples">sample reports</a> below recreate some of them with made-up data.</p>
 
     <div class="card">
       <div class="card-head">
@@ -293,7 +315,7 @@
 <section id="samples">
   <div class="wrap">
     <h2>Sample reports</h2>
-    <p class="sub">Rebuilt from reports I shipped, with made-up data and names. Hover or tap a bar, or tap a filter. Charts also work from the keyboard: Tab to one, then use the arrow keys.</p>
+    <p class="sub">Recreations of Power BI reports I built at previous jobs. The originals hold client data, so each one is redrawn here with made-up numbers and names. Each keeps the original's purpose and general layout, simplified. Happy to walk through the real designs in an interview. Hover or tap a bar, or tap a filter; charts also work from the keyboard (Tab to one, then use the arrow keys).</p>
 
     <figure class="report" aria-labelledby="bud-title">
       <div class="rpt-head">
@@ -354,11 +376,19 @@
 
     <figure class="report" aria-labelledby="sm-title">
       <div class="rpt-head">
-        <span class="rpt-title" id="sm-title">Semantic Model Health</span>
-        <span class="rpt-tag">Retail BI governance</span>
+        <span class="rpt-title" id="sm-title">Semantic Model Metadata</span>
+        <span class="rpt-tag">Retail BI governance &middot; 5 report pages</span>
       </div>
       <div class="rpt-body">
-        <div class="slicers">
+        <div class="pg-tabs" role="tablist" aria-label="Report pages" id="sm-tabs">
+          <button type="button" class="pg-tab" role="tab" id="t-info" aria-controls="pg-info" aria-selected="true">Model Info</button>
+          <button type="button" class="pg-tab" role="tab" id="t-conn" aria-controls="pg-conn" aria-selected="false" tabindex="-1">Connections</button>
+          <button type="button" class="pg-tab" role="tab" id="t-cmp" aria-controls="pg-cmp" aria-selected="false" tabindex="-1">PROD vs QA</button>
+          <button type="button" class="pg-tab" role="tab" id="t-rel" aria-controls="pg-rel" aria-selected="false" tabindex="-1">Relationships</button>
+          <button type="button" class="pg-tab" role="tab" id="t-sto" aria-controls="pg-sto" aria-selected="false" tabindex="-1">Storage &amp; Refresh</button>
+        </div>
+
+        <div class="slicers" id="sm-env-row">
           <span class="grp" id="env-btns" role="group" aria-label="Filter by environment">
             <span class="ctx">Environment</span>
             <button type="button" class="btn-f" data-env="PROD" aria-pressed="false">PROD</button>
@@ -366,17 +396,78 @@
             <button type="button" class="btn-f" data-env="QA" aria-pressed="false">QA</button>
           </span>
         </div>
-        <div class="tiles t4" id="sm-tiles"></div>
-        <div class="tbl-wrap">
-          <table class="rt" id="sm-table">
-            <caption class="sr-only">Semantic models by environment with refresh status, made-up data</caption>
-            <thead><tr><th scope="col">Env</th><th scope="col" class="hide-sm">Platform</th><th scope="col">Semantic model</th><th scope="col" class="hide-sm">Workspace</th>
-              <th scope="col" class="hide-sm">Last refresh</th><th scope="col">Status</th><th scope="col" class="n">Size GB</th><th scope="col" class="n hide-sm">Issues</th></tr></thead>
-            <tbody></tbody>
-          </table>
+        <div class="slicers" id="sm-model-row" hidden>
+          <label class="ctx" for="sm-model">Semantic model</label>
+          <select class="sel" id="sm-model"></select>
+        </div>
+
+        <div class="pg" role="tabpanel" id="pg-info" aria-labelledby="t-info">
+          <div class="tiles t4" id="sm-tiles"></div>
+          <div class="tbl-wrap">
+            <table class="rt" id="sm-table">
+              <caption class="sr-only">Semantic models by environment with refresh status, made-up data</caption>
+              <thead><tr><th scope="col">Env</th><th scope="col" class="hide-sm">Platform</th><th scope="col">Semantic model</th><th scope="col" class="hide-sm">Workspace</th>
+                <th scope="col" class="hide-sm">Last refresh</th><th scope="col">Status</th><th scope="col" class="n">Size GB</th><th scope="col" class="n hide-sm">Issues</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="pg" role="tabpanel" id="pg-conn" aria-labelledby="t-conn" hidden>
+          <div class="tbl-wrap">
+            <table class="rt" id="conn-table">
+              <caption class="sr-only">Where each semantic model gets its data, made-up names</caption>
+              <thead><tr><th scope="col">Env</th><th scope="col">Semantic model</th><th scope="col">Platform</th><th scope="col" class="hide-sm">Server</th>
+                <th scope="col">Database</th><th scope="col" class="hide-sm">Warehouse</th><th scope="col" class="hide-sm">Mode</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="note">Server, database and schema (ANALYTICS_CORE) are parameters in every model, so one model file deploys to PROD, PRE-PROD and QA unchanged.</p>
+        </div>
+
+        <div class="pg" role="tabpanel" id="pg-cmp" aria-labelledby="t-cmp" hidden>
+          <div class="tiles t4" id="cmp-tiles"></div>
+          <div class="split">
+            <div class="tbl-wrap">
+              <table class="rt" id="cmp-table">
+                <caption class="sr-only">Differences between each model's PROD and QA copies, made-up counts. Select a row for the column breakdown.</caption>
+                <thead><tr><th scope="col">Model comparison</th><th scope="col" class="n">Table</th><th scope="col" class="n">Relationship</th><th scope="col" class="n">Column</th><th scope="col" class="n">Total</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div>
+              <h4 id="cmp-head">Column issues by property</h4>
+              <div class="hb" id="cmp-bars"></div>
+              <p class="note">Tap a model to drill in. Green zeros mean PROD and QA match.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pg" role="tabpanel" id="pg-rel" aria-labelledby="t-rel" hidden>
+          <div class="tiles t4" id="rel-tiles"></div>
+          <div class="tbl-wrap">
+            <table class="rt" id="rel-table">
+              <caption class="sr-only">Relationships in the selected model, made-up names</caption>
+              <thead><tr><th scope="col">From table[column]</th><th scope="col">To table[column]</th><th scope="col" class="hide-sm">Cardinality</th>
+                <th scope="col">Cross filter</th><th scope="col">Active</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="pg" role="tabpanel" id="pg-sto" aria-labelledby="t-sto" hidden>
+          <div class="tiles t4" id="sto-tiles"></div>
+          <div class="tbl-wrap">
+            <table class="rt" id="sto-table">
+              <caption class="sr-only">Tables in the selected model with storage mode and refresh policy, made-up numbers</caption>
+              <thead><tr><th scope="col">Table</th><th scope="col">Storage mode</th><th scope="col" class="hide-sm">Incremental refresh</th>
+                <th scope="col" class="n">Rows</th><th scope="col" class="n">Size MB</th><th scope="col" class="hide-sm">Last schema change</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <figcaption>One page that tells the BI team which models are failing, stale or growing, across every environment and data platform.</figcaption>
+      <figcaption>A semantic model I built to track every other semantic model in the Power BI Service workspaces. It pulls all of their metadata (tables, columns, measures, relationships, connections, storage and refreshes) into one place, so the BI team can see which models are failing or stale, where each one connects, and what differs between PROD and QA before a release.</figcaption>
     </figure>
     <p id="kbd-hint" class="sr-only">Use the left and right arrow keys to move between bars. Home and End jump to the first and last bar.</p>
   </div>
@@ -635,10 +726,141 @@
        <td><span class="status ${st}"><i aria-hidden="true">${ST[st][0]}</i>${ST[st][1]}</span></td><td class="n">${gb.toFixed(2)}</td><td class="n hide-sm">${iss}</td></tr>`).join("");
     press($("#env-btns"), "env", env);
   }
+
+  // Page 2, Connections: one row per model per environment. Every host is a
+  // placeholder ("xy00000", zeros), not a real account.
+  const DB = { "PROD": "PRD_CURATED_DB", "PRE-PROD": "PP_CURATED_DB", "QA": "QA_CURATED_DB" };
+  const HOST = { Snowflake: "xy00000.us-east-1.snowflakecomputing.com", Databricks: "adb-0000000000000000.0.azuredatabricks.net",
+    Oracle: "ora-sample-01:1521/RETAILDW" };
+  const MODE = { "Daily Sales": "DirectQuery", "Store Labor": "Import", "Markdown Planning": "Import" };
+  function drawConn() {
+    const rows = models.filter((m) => !env || m[0] === env);
+    $("#conn-table tbody").innerHTML = rows.map(([e, p, m]) => {
+      const wh = p === "Snowflake" ? area[m].toUpperCase().replace(/ /g, "_") + "_BI_WH" : "-";
+      return `<tr><td>${e}</td><td>${m}</td><td>${p}</td><td class="hide-sm">${HOST[p]}</td><td>${p === "Oracle" ? "RETAILDW" : DB[e]}</td>
+        <td class="hide-sm">${wh}</td><td class="hide-sm">${MODE[m] || "Import + Dual"}</td></tr>`;
+    }).join("");
+    press($("#env-btns"), "env", env);
+  }
+
+  // Page 3, PROD vs QA: differences found by comparing each model's metadata
+  // (tables, relationships, columns) across the two environments.
+  const PROPS = ["Name", "Description", "IsHidden", "Display folder", "Format string", "Data type", "Expression", "SummarizeBy", "Source provider"];
+  const cmp = [
+    ["Markdown Planning", 0, 0, [0, 0, 0, 0, 0, 0, 0, 0, 0]],
+    ["Daily Sales", 0, 0, [0, 0, 0, 0, 0, 0, 0, 0, 0]],
+    ["Customer Analysis", 0, 5, [12, 31, 18, 9, 22, 6, 4, 14, 5]],
+    ["Sales Performance", 3, 7, [26, 44, 39, 15, 31, 12, 9, 22, 8]],
+    ["Store Labor", 9, 0, [41, 63, 52, 18, 47, 22, 11, 35, 14]],
+    ["Inventory Health", 14, 12, [58, 96, 81, 27, 64, 31, 19, 52, 21]],
+    ["Supply Chain Flow", 22, 18, [97, 141, 128, 44, 103, 57, 26, 88, 39]]
+  ].map(([m, t, r, cols]) => ({ m, t, r, cols, c: cols.reduce((a, x) => a + x, 0) }));
+  let pick = "Supply Chain Flow";
+  function drawCmp() {
+    const T = (k) => cmp.reduce((a, x) => a + x[k], 0);
+    tiles($("#cmp-tiles"), [["Table issues", num(T("t"))], ["Relationship issues", num(T("r"))], ["Column issues", num(T("c"))],
+      ["Models matching", cmp.filter((x) => x.t + x.r + x.c === 0).length + " of " + cmp.length]]);
+    const z = (v) => `<td class="n${v ? "" : " zero"}">${v ? num(v) : "0"}</td>`;
+    $("#cmp-table tbody").innerHTML = cmp.map((x) =>
+      `<tr class="pick" tabindex="0" data-m="${x.m}" aria-selected="${x.m === pick}"><td>${x.m} PROD to QA</td>${z(x.t)}${z(x.r)}${z(x.c)}${z(x.t + x.r + x.c)}</tr>`).join("");
+    const row = cmp.find((x) => x.m === pick), max = Math.max(1, ...row.cols);
+    $("#cmp-head").textContent = `${pick}: column issues by property`;
+    $("#cmp-bars").innerHTML = PROPS.map((p, i) =>
+      `<span>${p}</span><span class="tr"><i style="width:${(row.cols[i] / max * 100).toFixed(1)}%"></i></span><span class="n">${num(row.cols[i])}</span>`).join("");
+  }
+  const choose = (ev) => {
+    const tr = ev.target.closest("tr.pick"); if (!tr) return;
+    if (ev.type === "keydown" && ev.key !== "Enter" && ev.key !== " ") return;
+    ev.preventDefault(); pick = tr.dataset.m; drawCmp();
+    $(`#cmp-table tr[data-m="${pick}"]`).focus();
+  };
+  $("#cmp-table").addEventListener("click", choose);
+  $("#cmp-table").addEventListener("keydown", choose);
+
+  // Pages 4 and 5 share a model picker. Each model is a small star schema.
+  const SCHEMA = {
+    "Sales Performance": { fact: [["FACT_SALES_DAY", 48.2, "Rolling 3 yrs, refresh last 10 days"], ["FACT_RETURNS_DAY", 6.1, "Rolling 3 yrs, refresh last 10 days"]],
+      dims: ["DIM_CALENDAR", "DIM_STORE", "DIM_PRODUCT", "DIM_CHANNEL", "DIM_PROMO"] },
+    "Inventory Health": { fact: [["FACT_INVENTORY_SNAPSHOT", 61.4, "Rolling 2 yrs, refresh last 3 days"], ["FACT_RECEIPTS", 9.8, "Rolling 2 yrs, refresh last 7 days"]],
+      dims: ["DIM_CALENDAR", "DIM_LOCATION", "DIM_PRODUCT", "DIM_VENDOR"] },
+    "Supply Chain Flow": { fact: [["FACT_DISTRIBUTION", 72.9, "Rolling 2 yrs, refresh last 5 days"], ["FACT_FREIGHT_COST", 4.3, "Rolling 2 yrs, refresh last 5 days"]],
+      dims: ["DIM_CALENDAR", "DIM_LOCATION_FROM", "DIM_LOCATION_TO", "DIM_PRODUCT", "DIM_CARRIER"] },
+    "Customer Analysis": { fact: [["FACT_ORDER_LINE", 33.7, "Rolling 3 yrs, refresh last 10 days"]],
+      dims: ["DIM_CALENDAR", "DIM_CUSTOMER_SEGMENT", "DIM_PRODUCT", "DIM_CHANNEL"] },
+    "Store Labor": { fact: [["FACT_TIME_ENTRY", 18.6, "None (full refresh)"], ["FACT_BUDGET_HOURS", 1.2, "None (full refresh)"]],
+      dims: ["DIM_CALENDAR", "DIM_STORE", "DIM_JOB_GROUP", "DIM_SHIFT_TYPE"] },
+    "Markdown Planning": { fact: [["FACT_PRICE_EVENT", 2.4, "None (full refresh)"]], dims: ["DIM_CALENDAR", "DIM_PRODUCT", "DIM_SEASON"] },
+    "Daily Sales": { fact: [["FACT_SALES_TODAY", 0.9, "DirectQuery, no refresh"]], dims: ["DIM_STORE", "DIM_PRODUCT"] }
+  };
+  const modelNames = Object.keys(SCHEMA);
+  $("#sm-model").innerHTML = modelNames.map((m) => `<option>${m}</option>`).join("");
+  $("#sm-model").value = "Supply Chain Flow";
+  const keyOf = (d) => d.replace(/^DIM_/, "").replace(/_(FROM|TO)$/, "") + "_KEY";
+  function rels(m) {
+    const s = SCHEMA[m], out = [];
+    s.fact.forEach(([f], fi) => s.dims.forEach((d, di) => {
+      if (fi > 0 && di > 2) return;                       // second fact only joins the core dims
+      out.push({ from: `${f}[${keyOf(d)}]`, to: `${d}[${keyOf(d)}]`, card: "Many to one", both: false, active: true });
+    }));
+    if (s.fact[0]) {                                      // a role-playing date, kept inactive
+      if (s.dims.includes("DIM_CALENDAR") && m !== "Daily Sales")
+        out.push({ from: `${s.fact[0][0]}[SHIP_DATE_KEY]`, to: "DIM_CALENDAR[CALENDAR_KEY]", card: "Many to one", both: false, active: false });
+    }
+    if (m === "Inventory Health" || m === "Supply Chain Flow") out[1].both = true;   // the one to review
+    return out;
+  }
+  function drawRel() {
+    const m = $("#sm-model").value, rs = rels(m);
+    tiles($("#rel-tiles"), [["Relationships", rs.length], ["Inactive", rs.filter((r) => !r.active).length],
+      ["Both-direction filters", rs.filter((r) => r.both).length], ["Tables", SCHEMA[m].fact.length + SCHEMA[m].dims.length]]);
+    $("#rel-table tbody").innerHTML = rs.map((r) =>
+      `<tr><td>${r.from}</td><td>${r.to}</td><td class="hide-sm">${r.card}</td>
+       <td>${r.both ? '<span class="status stale"><i aria-hidden="true">!</i>Both</span>' : "Single"}</td><td>${r.active ? "Yes" : "No (USERELATIONSHIP)"}</td></tr>`).join("");
+  }
+  function drawSto() {
+    const m = $("#sm-model").value, s = SCHEMA[m];
+    seed = 7 + modelNames.indexOf(m);                      // same numbers every time for a model
+    const rows = s.fact.map(([t, mrows, inc]) => ({ t, mode: m === "Daily Sales" ? "DirectQuery" : "Import", inc, rows: mrows * 1e6, mb: mrows * (18 + rnd() * 9) }))
+      .concat(s.dims.map((d) => {
+        const n = d === "DIM_CALENDAR" ? 3653 : Math.round(200 + rnd() * (d.includes("PRODUCT") ? 180000 : 4000));
+        return { t: d, mode: m === "Daily Sales" ? "Dual" : (d === "DIM_CALENDAR" ? "Import" : "Dual"), inc: "None (full refresh)", rows: n, mb: n * 0.0009 + rnd() * 2 };
+      }));
+    const days = ["10/14", "10/02", "09/30", "09/18", "10/21", "10/09"];
+    tiles($("#sto-tiles"), [["Tables", rows.length], ["Incremental", rows.filter((r) => !r.inc.startsWith("None") && !r.inc.startsWith("Direct")).length],
+      ["Rows", num(rows.reduce((a, r) => a + r.rows, 0))], ["Model size", (rows.reduce((a, r) => a + r.mb, 0) / 1024).toFixed(2) + " GB"]]);
+    $("#sto-table tbody").innerHTML = rows.map((r, i) =>
+      `<tr><td>${r.t}</td><td>${r.mode}</td><td class="hide-sm">${r.inc}</td><td class="n">${num(r.rows)}</td><td class="n">${num(r.mb)}</td>
+       <td class="hide-sm">${days[i % days.length]}</td></tr>`).join("");
+  }
+  $("#sm-model").addEventListener("change", () => { drawRel(); drawSto(); });
+
+  // Page tabs: Model Info and Connections use the environment filter; the last
+  // two pages use the model picker; PROD vs QA needs neither.
+  const PAGES = { "t-info": [drawModels, "env"], "t-conn": [drawConn, "env"], "t-cmp": [drawCmp, ""], "t-rel": [drawRel, "model"], "t-sto": [drawSto, "model"] };
+  function openPage(tab) {
+    document.querySelectorAll("#sm-tabs .pg-tab").forEach((t) => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1;
+      $("#" + t.getAttribute("aria-controls")).hidden = !on;
+    });
+    const [draw, filter] = PAGES[tab.id];
+    $("#sm-env-row").hidden = filter !== "env";
+    $("#sm-model-row").hidden = filter !== "model";
+    draw();
+  }
+  $("#sm-tabs").addEventListener("click", (ev) => { const t = ev.target.closest(".pg-tab"); if (t) openPage(t); });
+  $("#sm-tabs").addEventListener("keydown", (ev) => {
+    const ts = [...document.querySelectorAll("#sm-tabs .pg-tab")], i = ts.indexOf(document.activeElement);
+    if (i < 0) return;
+    const j = ev.key === "ArrowRight" ? (i + 1) % ts.length : ev.key === "ArrowLeft" ? (i - 1 + ts.length) % ts.length : -1;
+    if (j < 0) return;
+    ev.preventDefault(); ts[j].focus(); openPage(ts[j]);
+  });
+
   $("#env-btns").addEventListener("click", (ev) => {
     const b = ev.target.closest(".btn-f"); if (!b) return;
     env = env === b.dataset.env ? null : b.dataset.env;  // tap again to clear; nothing on = all
-    drawModels();
+    (document.querySelector("#sm-tabs [aria-selected='true']").id === "t-conn" ? drawConn : drawModels)();
   });
 
   // ---- Shared tooltip: pointer, touch and keyboard ------------------------
