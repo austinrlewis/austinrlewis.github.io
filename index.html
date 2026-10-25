@@ -107,7 +107,7 @@
   .pbr dd { margin: 0; }
   .grid2 .tags { margin-top: auto; }
 
-  /* Property Command Center: a no-numbers diagram in place of a screenshot */
+  /* Property Command Center: data-flow diagram */
   .flow { margin: 12px 0 0; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 10px 10px 8px; }
   .flow svg { display: block; width: 100%; height: auto; }
   .flow rect { fill: var(--card); stroke: var(--line); stroke-width: 1; }
@@ -117,6 +117,15 @@
   .flow path { fill: none; stroke: var(--muted); stroke-width: 1.25; }
   .flow marker path { fill: var(--muted); stroke: none; }
   .flow figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  /* Screenshots of three panes, rebuilt with made-up data */
+  .shots { margin: 10px 0 0; }
+  .shot-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .shot-row a { display: block; font-size: 12px; color: var(--muted); text-align: center; }
+  .shot-row a:hover { color: var(--text); text-decoration: none; }
+  .shot-row img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; margin-bottom: 3px;
+    border: 1px solid var(--line); border-radius: 6px; background: var(--bg); }
+  .shot-row a:hover img { border-color: var(--accent); }
+  .shots figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
 
   .skills { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; padding: 0; list-style: none; }
   .skills li { font-size: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; }
@@ -570,7 +579,15 @@
             <path d="M262,66 L274,66" marker-end="url(#ah)"/>
             <rect x="278" y="44" width="80" height="44" rx="6"/><text x="318" y="63">HTML</text><text x="318" y="78">dashboard</text>
           </svg>
-          <figcaption>How it fits together. The dashboard holds private finances, so it is described, not shown.</figcaption>
+          <figcaption>How it fits together.</figcaption>
+        </figure>
+        <figure class="shots">
+          <div class="shot-row">
+            <a href="assets/pcc-finance.png" target="_blank" rel="noopener"><img src="assets/pcc-finance-sm.webp" width="480" height="270" loading="lazy" alt="Finance pane, made-up data: net worth, account balances, home equity and mortgage payoff, top holdings and a net worth trend."><span>Finance</span></a>
+            <a href="assets/pcc-utilities.png" target="_blank" rel="noopener"><img src="assets/pcc-utilities-sm.webp" width="480" height="270" loading="lazy" alt="Utilities and rent pane, made-up data: rent and mortgage totals, rent by unit against the mortgage each month, each bill against last year, and utility totals by month."><span>Utilities</span></a>
+            <a href="assets/pcc-airbnb.png" target="_blank" rel="noopener"><img src="assets/pcc-airbnb-sm.webp" width="480" height="270" loading="lazy" alt="Airbnb pane, made-up data: host and co-host payouts after tax, a booking calendar with stays, payouts by month and the host and co-host split."><span>Airbnb</span></a>
+          </div>
+          <figcaption>Three of its panes, filled with made-up data. Select one to open it full size.</figcaption>
         </figure>
         <dl class="pbr">
           <dt>Problem</dt><dd>The money lived in a ledger, two Sheets and Airbnb payouts, with no single view.</dd>
