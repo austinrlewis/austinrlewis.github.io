@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Austin Lewis | Senior Power BI Developer</title>
-<meta name="description" content="Senior Power BI Developer, 8+ years: DAX, Snowflake and Azure BI semantic models, plus Python and AI automation. Open to remote roles.">
+<title>Austin Lewis | Power BI Developer</title>
+<meta name="description" content="Power BI Developer, 8+ years: DAX, Snowflake and Azure BI semantic models, plus Python and AI automation. Open to remote roles.">
 <meta name="author" content="Austin Lewis">
 <meta name="color-scheme" content="dark light">
 <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Austin Lewis">
-<meta property="og:title" content="Austin Lewis | Senior Power BI Developer">
+<meta property="og:title" content="Austin Lewis | Power BI Developer">
 <meta property="og:description" content="I build semantic models people trust, and I automate the work around them with Python and AI. Sample reports, projects and contact.">
 <meta property="og:url" content="https://austinrlewis.github.io/">
 <meta property="og:image" content="https://austinrlewis.github.io/assets/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://austinrlewis.github.io/assets/og-image.png">
-<meta name="twitter:title" content="Austin Lewis | Senior Power BI Developer">
+<meta name="twitter:title" content="Austin Lewis | Power BI Developer">
 <meta name="twitter:description" content="I build semantic models people trust, and I automate the work around them with Python and AI.">
 <link rel="canonical" href="https://austinrlewis.github.io/">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -209,6 +209,7 @@
   .miss { color: var(--warn); }
   .split { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
   .split h4 { margin: 0 0 6px; font-size: 13px; font-weight: 600; }
+  .hb .tr i.warn { background: var(--warn); }
 
   @media (max-width: 760px) {
     .split { grid-template-columns: 1fr; }
@@ -251,7 +252,7 @@
   <div class="wrap">
     <div>
       <span class="eyebrow">Open to remote roles &middot; Denver, CO</span>
-      <h1>Senior Power BI Developer</h1>
+      <h1>Power BI Developer</h1>
       <p class="lede">I build semantic models people trust, and I automate the work around them with Python and AI.</p>
       <ul class="chips" aria-label="Core tools">
         <li>Power BI</li><li>DAX</li><li>Snowflake</li><li>Azure BI</li><li>SQL</li><li>Python</li><li>Copilot</li>
@@ -347,11 +348,17 @@
 
     <figure class="report" aria-labelledby="frac-title">
       <div class="rpt-head">
-        <span class="rpt-title" id="frac-title">Completion Summary</span>
-        <span class="rpt-tag">Oilfield services, customer-facing</span>
+        <span class="rpt-title" id="frac-title">Completion Operations</span>
+        <span class="rpt-tag">Oilfield services &middot; 3 report pages</span>
       </div>
-      <figcaption>Each customer sees only its own wells through row-level security; one report served 30+ operators.</figcaption>
+      <figcaption>A frac completions report. The customer-facing summary uses row-level security so each operator sees only its own wells; one report served 30+ operators. Internal pages check every uploaded treatment for bad field data and track proppant on location so crews don't run short.</figcaption>
       <div class="rpt-body">
+        <div class="pg-tabs" role="tablist" aria-label="Report pages" id="frac-tabs">
+          <button type="button" class="pg-tab" role="tab" id="f-sum" aria-controls="fp-sum" aria-selected="true">Completion Summary</button>
+          <button type="button" class="pg-tab" role="tab" id="f-dq" aria-controls="fp-dq" aria-selected="false" tabindex="-1">Data Quality</button>
+          <button type="button" class="pg-tab" role="tab" id="f-prop" aria-controls="fp-prop" aria-selected="false" tabindex="-1">Proppant Inventory</button>
+        </div>
+        <div class="pg" role="tabpanel" id="fp-sum" aria-labelledby="f-sum">
         <div class="slicers">
           <span class="ctx">Operator <b>Sample Energy Co.</b></span>
           <span class="ctx">Sep 1 - Sep 28</span>
@@ -375,6 +382,42 @@
             <table class="rt" id="frac-wells-tbl"><caption class="sr-only">Lateral length and stages by well</caption><thead><tr><th scope="col">Well</th><th scope="col" class="n">Lateral ft</th><th scope="col" class="n">Stages</th></tr></thead><tbody></tbody></table>
           </div>
         </details>
+        </div>
+
+        <div class="pg" role="tabpanel" id="fp-dq" aria-labelledby="f-dq" hidden>
+          <div class="tiles t4" id="dq-tiles"></div>
+          <div class="split">
+            <div>
+              <h4 class="sub-h">Issues by check</h4>
+              <div class="hb" id="dq-bars"></div>
+              <p class="note">Every treatment upload runs these checks, for example a well more than 5 miles from its pad, or an average pressure above the maximum.</p>
+            </div>
+            <div class="tbl-wrap">
+              <table class="rt" id="dq-table">
+                <caption class="sr-only">Crews ranked by data issues, made-up crews and counts</caption>
+                <thead><tr><th scope="col">Crew</th><th scope="col" class="n">Treatments</th><th scope="col" class="n">Pre-job</th><th scope="col" class="n">Completed</th><th scope="col" class="n">Issue rate</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="pg" role="tabpanel" id="fp-prop" aria-labelledby="f-prop" hidden>
+          <div class="slicers">
+            <label class="ctx" for="prop-crew">Crew</label>
+            <select class="sel" id="prop-crew"></select>
+          </div>
+          <div class="tiles t4" id="prop-tiles"></div>
+          <div class="tbl-wrap">
+            <table class="rt" id="prop-table">
+              <caption class="sr-only">Proppant boxes on location and hours of supply, made-up data</caption>
+              <thead><tr><th scope="col">Proppant</th><th scope="col" class="n">Full</th><th scope="col" class="n">Partial</th><th scope="col" class="n hide-sm">Empty</th>
+                <th scope="col" class="n hide-sm">On location (lbs)</th><th scope="col" class="n hide-sm">Use per hour (lbs)</th><th scope="col">Hours of supply</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="note">Hours of supply = proppant on location / average use per hour over the last 10 hours. Under 12 hours is red and under 24 is amber, so a delivery gets scheduled in time.</p>
+        </div>
       </div>
     </figure>
 
@@ -589,7 +632,7 @@
 <section id="contact" class="contact">
   <div class="wrap">
     <h2>Let's talk</h2>
-    <p class="sub">Looking for a remote Senior Power BI / BI Developer role.</p>
+    <p class="sub">Looking for a remote Power BI / BI Developer role.</p>
     <div class="actions">
       <a class="btn" href="mailto:austin.lewis23@gmail.com">Email me</a>
       <a class="btn ghost" href="https://www.linkedin.com/in/austin-lewis/" target="_blank" rel="noopener">LinkedIn</a>
@@ -723,6 +766,71 @@
     const b = ev.target.closest(".btn-f"); if (!b) return;
     pad = pad === b.dataset.pad ? null : b.dataset.pad;  // tap again to clear; nothing on = all
     drawFrac();
+  });
+
+  // Completion Operations, page 2: Data Quality. Each treatment upload is run
+  // through field-data checks; counts and crews are made up.
+  const CHECKS = [["Treatment more than 5 mi from pad", 191], ["Proppant std. deviation over 7,500 lbs", 142],
+    ["Chemical over 10% of re-design", 118], ["Avg pressure above max", 77], ["Personnel name blank or NA", 64],
+    ["Duplicate well API#", 31], ["Duplicate import", 19], ["MD less than TVD", 9]];
+  const CREWS = [["Crew 14 - North", 412, 3, 41], ["Crew 07 - Basin", 388, 5, 36], ["Crew 22 - Plains", 365, 2, 29],
+    ["Crew 03 - Ridge", 341, 9, 33], ["Crew 18 - Mesa", 322, 1, 18], ["Crew 11 - Valley", 297, 4, 22],
+    ["Crew 26 - Delta", 276, 0, 11], ["Crew 09 - Canyon", 251, 6, 27]];
+  function drawDQ() {
+    const tr = CREWS.reduce((a, c) => a + c[1], 0), pre = CREWS.reduce((a, c) => a + c[2], 0), done = CREWS.reduce((a, c) => a + c[3], 0);
+    tiles($("#dq-tiles"), [["Treatments checked", num(tr)], ["Pre-job issues", pre], ["Completed-treatment issues", done],
+      ["Issue rate", ((pre + done) / tr * 100).toFixed(1) + "%"]]);
+    const max = Math.max(...CHECKS.map((c) => c[1]));
+    $("#dq-bars").innerHTML = CHECKS.map(([k, v]) =>
+      `<span>${k}</span><span class="tr"><i style="width:${(v / max * 100).toFixed(1)}%"></i></span><span class="n">${v}</span>`).join("");
+    const rows = CREWS.map(([c, t, p, d]) => ({ c, t, p, d, r: (p + d) / t })).sort((a, b) => b.r - a.r);
+    $("#dq-table tbody").innerHTML = rows.map((x) =>
+      `<tr><td>${x.c}</td><td class="n">${x.t}</td><td class="n">${x.p}</td><td class="n">${x.d}</td>
+       <td class="n${x.r > 0.1 ? " over" : ""}">${(x.r * 100).toFixed(1)}%</td></tr>`).join("");
+  }
+
+  // Page 3: Proppant Inventory. Boxes on location by sand type for one crew;
+  // a box holds about 22,000 lbs. All made up.
+  const PROP = {
+    "Crew 14 - North": [["100 Mesh, Regional", 22, 3, 9, 46000], ["40/70, Regional", 14, 2, 6, 15500], ["30/50, Premium White", 4, 1, 3, 2100]],
+    "Crew 07 - Basin": [["100 Mesh, Regional", 31, 2, 4, 38000], ["40/70, Regional", 6, 1, 11, 16800], ["20/40, Ceramic", 3, 0, 1, 1200]],
+    "Crew 22 - Plains": [["100 Mesh, Natural", 18, 4, 7, 21000], ["40/70, Natural", 20, 1, 5, 14000]],
+    "Crew 03 - Ridge": [["100 Mesh, Regional", 9, 1, 14, 24000], ["40/70, Premium White", 12, 2, 3, 9800], ["30/50, Resin Coated", 2, 1, 2, 1500]]
+  };
+  const BOX = 22000;
+  $("#prop-crew").innerHTML = Object.keys(PROP).map((c) => `<option>${c}</option>`).join("");
+  function drawProp() {
+    const rows = PROP[$("#prop-crew").value].map(([p, f, pa, e, use]) => {
+      const lbs = f * BOX + pa * BOX * 0.45;
+      return { p, f, pa, e, use, lbs, hrs: lbs / use };
+    });
+    tiles($("#prop-tiles"), [["Full boxes", rows.reduce((a, r) => a + r.f, 0)], ["Partial", rows.reduce((a, r) => a + r.pa, 0)],
+      ["Empty", rows.reduce((a, r) => a + r.e, 0)], ["Lowest supply", Math.min(...rows.map((r) => r.hrs)).toFixed(0) + " hrs"]]);
+    $("#prop-table tbody").innerHTML = rows.map((r) => {
+      const st = r.hrs < 12 ? "fail" : r.hrs < 24 ? "stale" : "ok";
+      return `<tr><td>${r.p}</td><td class="n">${r.f}</td><td class="n">${r.pa}</td><td class="n hide-sm">${r.e}</td>
+        <td class="n hide-sm">${num(r.lbs)}</td><td class="n hide-sm">${num(r.use)}</td>
+        <td><span class="status ${st}"><i aria-hidden="true">${ST[st][0]}</i>${r.hrs.toFixed(0)} hrs</span></td></tr>`;
+    }).join("");
+  }
+  $("#prop-crew").addEventListener("change", drawProp);
+
+  const FPAGES = { "f-sum": drawFrac, "f-dq": drawDQ, "f-prop": drawProp };
+  function openFrac(tab) {
+    document.querySelectorAll("#frac-tabs .pg-tab").forEach((t) => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1;
+      $("#" + t.getAttribute("aria-controls")).hidden = !on;
+    });
+    FPAGES[tab.id]();
+  }
+  $("#frac-tabs").addEventListener("click", (ev) => { const t = ev.target.closest(".pg-tab"); if (t) openFrac(t); });
+  $("#frac-tabs").addEventListener("keydown", (ev) => {
+    const ts = [...document.querySelectorAll("#frac-tabs .pg-tab")], i = ts.indexOf(document.activeElement);
+    if (i < 0) return;
+    const j = ev.key === "ArrowRight" ? (i + 1) % ts.length : ev.key === "ArrowLeft" ? (i - 1 + ts.length) % ts.length : -1;
+    if (j < 0) return;
+    ev.preventDefault(); ts[j].focus(); openFrac(ts[j]);
   });
 
   // ---- 3. Semantic Model Health -------------------------------------------
