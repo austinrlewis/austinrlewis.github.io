@@ -6,7 +6,6 @@
 <title>Austin Lewis | Power BI Developer</title>
 <meta name="description" content="Power BI Developer, 8+ years: DAX, Snowflake and Azure BI semantic models, plus Python and AI automation. Open to remote roles.">
 <meta name="author" content="Austin Lewis">
-<meta name="robots" content="noindex">
 <meta name="color-scheme" content="dark light">
 <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
@@ -120,7 +119,7 @@
   .flow figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
   /* Screenshots of three panes, rebuilt with made-up data */
   .shots { margin: 10px 0 0; }
-  .shot-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .shot-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .shot-row a { display: block; font-size: 12px; color: var(--muted); text-align: center; }
   .shot-row a:hover { color: var(--text); text-decoration: none; }
   .shot-row img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; margin-bottom: 3px;
@@ -221,8 +220,29 @@
   .split h4 { margin: 0 0 6px; font-size: 13px; font-weight: 600; }
   .hb .tr i.warn { background: var(--warn); }
 
+  /* Semantic Model Metadata: how it's built (real model design, names changed) */
+  .built { border-top: 1px solid var(--line); padding: 16px 16px 18px; }
+  .built h4 { margin: 0 0 4px; font-size: 14px; }
+  .built .note { margin: 0 0 10px; }
+  .built-grid { display: grid; grid-template-columns: minmax(0, .75fr) minmax(0, 1.5fr); gap: 18px; align-items: start; margin-top: 16px; }
+  .erd { margin: 0; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 8px; }
+  .erd svg { display: block; width: 100%; min-width: 640px; height: auto; }
+  .erd rect { fill: var(--card); stroke: var(--ctl); stroke-width: 1; }
+  .erd rect.hub { stroke: var(--accent); stroke-width: 2; }
+  .erd rect.copy { fill: color-mix(in srgb, var(--accent) 16%, var(--bg)); }
+  .erd text { font-size: 11.5px; fill: var(--text); text-anchor: middle; font-family: inherit; }
+  .erd text.cd { font-size: 11px; font-weight: 700; fill: var(--muted); }
+  .erd text.legend { text-anchor: start; font-size: 11px; fill: var(--muted); }
+  .erd line { stroke: var(--muted); stroke-width: 1.2; }
+  .erd line.mm { stroke-dasharray: 4 3; }
+  pre.code { margin: 0; padding: 12px 14px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto;
+    font: 12.5px/1.5 Consolas, "Cascadia Mono", monospace; color: var(--text); white-space: pre; }
+  pre.code .f { color: var(--accent); }
+  pre.code .s { color: var(--muted); }
+
   @media (max-width: 760px) {
-    .split { grid-template-columns: 1fr; }
+    .split, .built-grid { grid-template-columns: 1fr; }
+    .built { padding: 14px 12px 16px; }
     .tiles, .tiles.t4 { grid-template-columns: repeat(2, 1fr); }
     .charts { grid-template-columns: 1fr; }
     .hide-sm { display: none; }
@@ -288,7 +308,7 @@
       <div class="stat"><b>8+</b><span>Years building Power BI</span></div>
       <div class="stat"><b>30+</b><span>External clients on one secured platform</span></div>
       <div class="stat"><b>6</b><span>Industries: retail, energy, aerospace, financial services, grocery and construction</span></div>
-      <div class="stat"><b>~15 hrs</b><span>A month of manual tracking automated (estimate)</span></div>
+      <div class="stat"><b>20K+</b><span>Frac stages behind one customer-facing report with row-level security</span></div>
     </div>
   </div>
 </header>
@@ -463,6 +483,102 @@
           </div>
         </div>
       </div>
+      <div class="built">
+        <h4>How it's built</h4>
+        <p class="note">The real model's design: 17 tables and 16 relationships, fed by 204 metadata queries. Names in the code are changed.</p>
+        <figure class="erd">
+<svg viewBox="0 0 760 466" role="img" aria-labelledby="erd-t erd-d">
+<title id="erd-t">Semantic Model Metadata data model: 17 tables and 16 relationships</title>
+<desc id="erd-d">Workspace Info is the hub, one row per model and environment. Workspace Parameters, Model Size GB, Model Last Refresh, Model Views and Relationships join to it. Tables joins one to one with Model Views; Columns and Tables Entity join many to one to Tables. Relationships joins to From and To copies of Columns, each joined to a Tables copy and a storage mode table. Snowflake View Roles joins many to many with Model Views and with Snowflake Object Dependencies.</desc>
+<line x1="690" y1="54" x2="690" y2="80"/>
+<line x1="690" y1="140" x2="690" y2="114"/>
+<line x1="600" y1="97" x2="630" y2="97"/>
+<line x1="470" y1="97" x2="410" y2="97"/>
+<line x1="180" y1="97" x2="240" y2="97"/>
+<line x1="160" y1="54" x2="260" y2="80"/>
+<line x1="160" y1="140" x2="260" y2="114"/>
+<line x1="325" y1="230" x2="325" y2="114"/>
+<line x1="269" y1="264" x2="151" y2="300"/>
+<line x1="325" y1="264" x2="325" y2="300"/>
+<line x1="95" y1="334" x2="95" y2="360"/>
+<line x1="325" y1="334" x2="325" y2="360"/>
+<line x1="95" y1="420" x2="95" y2="394"/>
+<line x1="325" y1="420" x2="325" y2="394"/>
+<line class="mm" x1="557" y1="230" x2="538" y2="114"/>
+<line class="mm" x1="562" y1="264" x2="568" y2="300"/>
+<rect x="10" y="20" width="170" height="34" rx="6"/><text x="95" y="41">Workspace Parameters</text>
+<rect x="10" y="80" width="170" height="34" rx="6"/><text x="95" y="101">Model Size GB</text>
+<rect x="10" y="140" width="170" height="34" rx="6"/><text x="95" y="161">Model Last Refresh</text>
+<rect class="hub" x="240" y="80" width="170" height="34" rx="6"/><text x="325" y="101">Workspace Info</text>
+<rect x="470" y="80" width="130" height="34" rx="6"/><text x="535" y="101">Model Views</text>
+<rect x="630" y="20" width="120" height="34" rx="6"/><text x="690" y="41">Columns</text>
+<rect x="630" y="80" width="120" height="34" rx="6"/><text x="690" y="101">Tables</text>
+<rect x="630" y="140" width="120" height="34" rx="6"/><text x="690" y="161">Tables Entity</text>
+<rect x="240" y="230" width="170" height="34" rx="6"/><text x="325" y="251">Relationships</text>
+<rect class="copy" x="10" y="300" width="170" height="34" rx="6"/><text x="95" y="321">Relationships From Column</text>
+<rect class="copy" x="10" y="360" width="170" height="34" rx="6"/><text x="95" y="381">Relationships From Table</text>
+<rect class="copy" x="10" y="420" width="170" height="34" rx="6"/><text x="95" y="441">Storage Mode From Table</text>
+<rect class="copy" x="240" y="300" width="170" height="34" rx="6"/><text x="325" y="321">Relationships To Column</text>
+<rect class="copy" x="240" y="360" width="170" height="34" rx="6"/><text x="325" y="381">Relationships To Table</text>
+<rect class="copy" x="240" y="420" width="170" height="34" rx="6"/><text x="325" y="441">Storage Mode To Table</text>
+<rect class="sf" x="470" y="230" width="180" height="34" rx="6"/><text x="560" y="251">Snowflake View Roles</text>
+<rect class="sf" x="470" y="300" width="200" height="34" rx="6"/><text x="570" y="321">Snowflake Object Dependencies</text>
+<text class="cd" x="682" y="66">*</text>
+<text class="cd" x="698" y="74">1</text>
+<text class="cd" x="698" y="134">*</text>
+<text class="cd" x="682" y="126">1</text>
+<text class="cd" x="609" y="108">1</text>
+<text class="cd" x="621" y="92">1</text>
+<text class="cd" x="461" y="92">*</text>
+<text class="cd" x="419" y="108">1</text>
+<text class="cd" x="189" y="108">1</text>
+<text class="cd" x="231" y="92">1</text>
+<text class="cd" x="167" y="68">1</text>
+<text class="cd" x="253" y="73">1</text>
+<text class="cd" x="171" y="149">1</text>
+<text class="cd" x="249" y="112">1</text>
+<text class="cd" x="333" y="224">*</text>
+<text class="cd" x="317" y="126">1</text>
+<text class="cd" x="258" y="262">*</text>
+<text class="cd" x="162" y="309">1</text>
+<text class="cd" x="317" y="276">*</text>
+<text class="cd" x="333" y="294">1</text>
+<text class="cd" x="87" y="346">*</text>
+<text class="cd" x="103" y="354">1</text>
+<text class="cd" x="317" y="346">*</text>
+<text class="cd" x="333" y="354">1</text>
+<text class="cd" x="103" y="414">1</text>
+<text class="cd" x="87" y="406">1</text>
+<text class="cd" x="333" y="414">1</text>
+<text class="cd" x="317" y="406">1</text>
+<text class="cd" x="564" y="223">*</text>
+<text class="cd" x="531" y="128">*</text>
+<text class="cd" x="556" y="278">*</text>
+<text class="cd" x="574" y="293">*</text>
+<text class="legend" x="470" y="380">1 = one side, * = many side, dashed = many to many.</text>
+<text class="legend" x="470" y="398">Shaded = role-playing copies of Columns and Tables,</text>
+<text class="legend" x="470" y="414">so each relationship row reads both of its ends.</text>
+</svg>
+        </figure>
+        <div class="built-grid">
+          <div>
+            <h4>One of its 11 checks, in DAX</h4>
+            <p class="note">A calculated column on Relationships. It flags any DirectQuery relationship with "Assume referential integrity" off, which makes Power BI send slower outer joins.</p>
+            <a class="btn ghost" href="semantic-model-metadata.html">Read the case study</a>
+          </div>
+<pre class="code"><code>Referential Integrity Check =
+<span class="f">SWITCH</span> (
+    <span class="f">TRUE</span> (),
+    Relationships[Referential Integrity] = <span class="s">"Off"</span>
+        &amp;&amp; <span class="f">RELATED</span> ( 'Storage Mode From Table'[Storage Mode] ) = <span class="s">"Direct"</span>,
+        <span class="s">"Ref Should be Turned On"</span>,
+    Relationships[Referential Integrity] = <span class="s">"Off"</span>
+        &amp;&amp; <span class="f">RELATED</span> ( 'Storage Mode To Table'[Storage Mode] ) = <span class="s">"Direct"</span>,
+        <span class="s">"Ref Should be Turned On"</span>,
+    <span class="s">""</span>
+)</code></pre>
+        </div>
+      </div>
     </figure>
 
     <figure class="report" aria-labelledby="frac-title">
@@ -596,10 +712,11 @@
         <figure class="shots">
           <div class="shot-row">
             <a href="assets/pcc-finance.png" target="_blank" rel="noopener"><img src="assets/pcc-finance-sm.webp" width="480" height="270" loading="lazy" alt="Finance pane, made-up data: net worth, account balances, home equity and mortgage payoff, top holdings and a net worth trend."><span>Finance</span></a>
-            <a href="assets/pcc-utilities.png" target="_blank" rel="noopener"><img src="assets/pcc-utilities-sm.webp" width="480" height="270" loading="lazy" alt="Utilities and rent pane, made-up data: rent and mortgage totals, rent by unit against the mortgage each month, each bill against last year, and utility totals by month."><span>Utilities</span></a>
-            <a href="assets/pcc-airbnb.png" target="_blank" rel="noopener"><img src="assets/pcc-airbnb-sm.webp" width="480" height="270" loading="lazy" alt="Airbnb pane, made-up data: host and co-host payouts after tax, a booking calendar with stays, payouts by month and the host and co-host split."><span>Airbnb</span></a>
+            <a href="assets/pcc-utilities.png" target="_blank" rel="noopener"><img src="assets/pcc-utilities-sm.webp" width="480" height="270" loading="lazy" alt="Utilities and rent pane, made-up data: rent and mortgage totals, rent by unit against the mortgage each month, the house's running net against last year, each bill against last year, and utility totals by month."><span>Utilities</span></a>
+            <a href="assets/pcc-airbnb.png" target="_blank" rel="noopener"><img src="assets/pcc-airbnb-sm.webp" width="480" height="270" loading="lazy" alt="Airbnb pane, made-up data: host and co-host payouts after tax, start-up cost paid back so far, a booking calendar with stays, payouts by month that open into weeks, and booked nights by weekday."><span>Airbnb</span></a>
+            <a href="assets/pcc-airbnb-payouts.png" target="_blank" rel="noopener"><img src="assets/pcc-airbnb-payouts-sm.webp" width="480" height="270" loading="lazy" alt="Airbnb payouts, made-up data: a calendar of what each stayed night earned, June to October."><span>Airbnb payouts</span></a>
           </div>
-          <figcaption>Three of its panes, filled with made-up data. Select one to open it full size.</figcaption>
+          <figcaption>Four of its views, filled with made-up data. Select one to open it full size.</figcaption>
         </figure>
         <dl class="pbr">
           <dt>Problem</dt><dd>The money lived in a ledger, two Sheets and Airbnb payouts, with no single view.</dd>
@@ -607,26 +724,6 @@
           <dt>Result</dt><dd>~2 hrs a month of reconciling by hand, gone.</dd>
         </dl>
         <div class="tags"><span>Python</span><span>Google Sheets API</span><span>HTML/JS</span></div>
-      </div>
-
-      <div class="card">
-        <h3>Utility bill tracker</h3>
-        <dl class="pbr">
-          <dt>Problem</dt><dd>A 57 KB AI prompt spent most of its length on workarounds for driving a browser.</dd>
-          <dt>Built</dt><dd>A Python program that pulls five utility bills daily and writes them to a Sheet, refusing any write unless the month and year both match.</dd>
-          <dt>Result</dt><dd>Running unattended daily since Aug 2026; ~1.5 hrs a month of portal logins gone.</dd>
-        </dl>
-        <div class="tags"><span>Python</span><span>Playwright</span><span>Sheets API</span></div>
-      </div>
-
-      <div class="card">
-        <h3>Airbnb tracker sync</h3>
-        <dl class="pbr">
-          <dt>Problem</dt><dd>Bookings had to be copied into a tracker Sheet by an AI task every day.</dd>
-          <dt>Built</dt><dd>A daily program that plans each change before writing it, and exits non-zero on any anomaly so the monitor catches it.</dd>
-          <dt>Result</dt><dd>Replaced the AI task; runs at roughly zero token cost.</dd>
-        </dl>
-        <div class="tags"><span>Python</span><span>Sheets API</span><span>Task Scheduler</span></div>
       </div>
 
       <div class="card">
@@ -640,6 +737,7 @@
         <div class="tags"><span>Python</span><span>PowerShell</span><span>Gmail API</span></div>
       </div>
     </div>
+    <p class="earlier">Also running unattended: a utility bill tracker (Python and Playwright, five bills a day) and an Airbnb tracker sync that replaced a daily AI task.</p>
   </div>
 </section>
 
