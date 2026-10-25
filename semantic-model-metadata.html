@@ -108,6 +108,7 @@
   td { padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
   td:first-child { font-weight: 600; white-space: nowrap; }
   td.how { color: var(--muted); white-space: nowrap; }
+  td.fld code { font: 12px/1.4 Consolas, "Cascadia Mono", monospace; color: var(--text); background: var(--chip); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; white-space: normal; display: inline-block; }
 
   .pages { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 18px; margin: 0 0 16px; padding: 0; list-style: none; }
   .pages li { font-size: 14px; }
@@ -273,19 +274,19 @@
     <h2>The 11 checks</h2>
     <div class="tbl-wrap">
       <table>
-        <thead><tr><th scope="col">Check</th><th scope="col">What it catches</th><th scope="col">Built as</th></tr></thead>
+        <thead><tr><th scope="col">Check</th><th scope="col">What it catches</th><th scope="col">Model field</th><th scope="col">Built as</th></tr></thead>
         <tbody>
-          <tr><td>Data type match</td><td>A relationship joining two columns of different data types</td><td class="how">Calculated column</td></tr>
-          <tr><td>Referential integrity</td><td>A DirectQuery relationship with "Assume referential integrity" off, so Power BI sends outer joins</td><td class="how">Calculated column</td></tr>
-          <tr><td>Database per environment</td><td>A PROD copy reading the pre-prod database, or the reverse</td><td class="how">Calculated column</td></tr>
-          <tr><td>Server name</td><td>A copy pointed at the wrong Snowflake server</td><td class="how">Calculated column</td></tr>
-          <tr><td>Stale refresh</td><td>A last refresh older than that model's schedule allows, daily or weekly</td><td class="how">Calculated column</td></tr>
-          <tr><td>Duplicate column names</td><td>The same column name in two tables of one model copy</td><td class="how">Calculated column</td></tr>
-          <tr><td>Sort-by column</td><td>A column sorted by a different column, listed for review</td><td class="how">Calculated column</td></tr>
-          <tr><td>Missing descriptions</td><td>Share of columns with no description</td><td class="how">Measure</td></tr>
-          <tr><td>Missing format strings</td><td>Share of columns with no format string</td><td class="how">Measure</td></tr>
-          <tr><td>Snowflake database mismatch</td><td>A view reading a table from a different database</td><td class="how">Measure</td></tr>
-          <tr><td>Missing view role</td><td>A Snowflake view no role is granted to read</td><td class="how">Calculated column</td></tr>
+          <tr><td>Data type match</td><td>A relationship joining two columns of different data types</td><td class="fld"><code>Relationships[Data Type Match]</code></td><td class="how">Calculated column</td></tr>
+          <tr><td>Referential integrity</td><td>A DirectQuery relationship with "Assume referential integrity" off, so Power BI sends outer joins</td><td class="fld"><code>Relationships[Referential Integrity Check]</code></td><td class="how">Calculated column</td></tr>
+          <tr><td>Database per environment</td><td>A PROD copy reading the pre-prod database, or the reverse</td><td class="fld"><code>Workspace Parameters[Database Name Issue]</code></td><td class="how">Calculated column</td></tr>
+          <tr><td>Server name</td><td>A copy pointed at the wrong Snowflake server</td><td class="fld"><code>Workspace Parameters[Server Name Issue]</code></td><td class="how">Calculated column</td></tr>
+          <tr><td>Stale refresh</td><td>A last refresh older than that model's schedule allows, daily or weekly</td><td class="fld"><code>Model Last Refresh[Last Refresh is Today]</code></td><td class="how">Calculated column</td></tr>
+          <tr><td>Duplicate column names</td><td>The same column name in two tables of one model copy</td><td class="fld"><code>Columns[Column Name Duplicate Check]</code></td><td class="how">Calculated column</td></tr>
+          <tr><td>Sort-by column</td><td>A column sorted by a different column, listed for review</td><td class="fld"><code>Columns[SortByColumn Diff Column]</code></td><td class="how">Calculated column</td></tr>
+          <tr><td>Missing descriptions</td><td>Share of columns with no description</td><td class="fld"><code>Columns[Description Blank %]</code></td><td class="how">Measure</td></tr>
+          <tr><td>Missing format strings</td><td>Share of columns with no format string</td><td class="fld"><code>Columns[Format String Blank %]</code></td><td class="how">Measure</td></tr>
+          <tr><td>Snowflake database mismatch</td><td>A view reading a table from a different database</td><td class="fld"><code>Snowflake Object Dependencies[Database Miss Match Count]</code></td><td class="how">Measure</td></tr>
+          <tr><td>Missing view role</td><td>A Snowflake view no role is granted to read</td><td class="fld"><code>Snowflake View Roles[SF View Role Blank or Not Blank]</code></td><td class="how">Calculated column</td></tr>
         </tbody>
       </table>
     </div>
