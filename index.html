@@ -6,6 +6,7 @@
 <title>Austin Lewis | Power BI Developer</title>
 <meta name="description" content="Power BI Developer, 8+ years: DAX, Snowflake and Azure BI semantic models, plus Python and AI automation. Open to remote roles.">
 <meta name="author" content="Austin Lewis">
+<meta name="robots" content="noindex">
 <meta name="color-scheme" content="dark light">
 <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
@@ -229,7 +230,18 @@
     .hero .wrap, .grid2 { grid-template-columns: 1fr; }
     h1 { font-size: 32px; }
     .lede { font-size: 16px; }
-    nav .links a:not(.btn) { display: none; }
+    /* Nav: name and Resume on row 1, section links on row 2 */
+    nav .wrap { position: relative; display: block; height: auto; padding-top: 8px; padding-bottom: 2px; }
+    nav .name { display: block; line-height: 38px; }
+    nav .links { gap: 16px; font-size: 13px; }
+    nav .links a:not(.btn) { padding: 8px 0; }
+    nav .links a.btn { position: absolute; right: 20px; top: 8px; }
+    section { scroll-margin-top: 92px; }
+    .btn-f { min-height: 40px; min-width: 40px; padding: 6px 12px; }
+    .pg-tab { padding: 11px 11px; }
+    .flow { padding: 8px 6px 6px; }
+    .flow text { font-size: 12.5px; }
+    .flow text.sub2 { font-size: 11px; }
     section { padding: 36px 0; }
     .card { padding: 18px 16px; }
     .rpt-body { padding: 12px 12px 10px; }
@@ -852,16 +864,16 @@
   });
 
   // ---- 3. Semantic Model Health -------------------------------------------
-  const area = { "Sales Performance": "Sales", "Daily Sales": "Sales", "Inventory Health": "Merchandising",
-    "Markdown Planning": "Merchandising", "Customer Analysis": "Marketing", "Store Labor": "Stores", "Supply Chain Flow": "Supply Chain" };
+  const area = { "Sales Performance": "Sales", "Sales Flash": "Sales", "Inventory Health": "Merchandising",
+    "Markdown Planning": "Merchandising", "Customer Loyalty": "Marketing", "Store Labor": "Stores", "Supply Chain Flow": "Supply Chain" };
   const models = [
     ["PROD", "Databricks", "Markdown Planning", "10/22 3:09 AM", "ok", 0.12, 0],
     ["PROD", "Snowflake", "Sales Performance", "10/22 4:41 AM", "ok", 6.84, 3],
     ["PROD", "Snowflake", "Inventory Health", "10/22 5:02 AM", "ok", 4.10, 12],
-    ["PROD", "Snowflake", "Customer Analysis", "10/22 5:15 AM", "ok", 3.92, 0],
+    ["PROD", "Snowflake", "Customer Loyalty", "10/22 5:15 AM", "ok", 3.92, 0],
     ["PROD", "Oracle", "Store Labor", "10/20 11:40 PM", "stale", 2.37, 5],
     ["PROD", "Snowflake", "Supply Chain Flow", "10/22 6:00 AM", "fail", 9.61, 21],
-    ["PROD", "Snowflake", "Daily Sales", "10/22 4:30 AM", "ok", 0.08, 0],
+    ["PROD", "Snowflake", "Sales Flash", "10/22 4:30 AM", "ok", 0.08, 0],
     ["PRE-PROD", "Databricks", "Markdown Planning", "10/22 2:55 AM", "ok", 0.11, 0],
     ["PRE-PROD", "Snowflake", "Sales Performance", "10/21 1:10 AM", "stale", 6.79, 4],
     ["PRE-PROD", "Snowflake", "Inventory Health", "10/22 4:58 AM", "ok", 4.06, 9],
@@ -888,7 +900,7 @@
   const DB = { "PROD": "PRD_CURATED_DB", "PRE-PROD": "PP_CURATED_DB", "QA": "QA_CURATED_DB" };
   const HOST = { Snowflake: "xy00000.us-east-1.snowflakecomputing.com", Databricks: "adb-0000000000000000.0.azuredatabricks.net",
     Oracle: "ora-sample-01:1521/RETAILDW" };
-  const MODE = { "Daily Sales": "DirectQuery", "Store Labor": "Import", "Markdown Planning": "Import" };
+  const MODE = { "Sales Flash": "DirectQuery", "Store Labor": "Import", "Markdown Planning": "Import" };
   function drawConn() {
     const rows = models.filter((m) => !env || m[0] === env);
     $("#conn-table tbody").innerHTML = rows.map(([e, p, m]) => {
@@ -904,8 +916,8 @@
   const PROPS = ["Name", "Description", "IsHidden", "Display folder", "Format string", "Data type", "Expression", "SummarizeBy", "Source provider"];
   const cmp = [
     ["Markdown Planning", 0, 0, [0, 0, 0, 0, 0, 0, 0, 0, 0]],
-    ["Daily Sales", 0, 0, [0, 0, 0, 0, 0, 0, 0, 0, 0]],
-    ["Customer Analysis", 0, 5, [12, 31, 18, 9, 22, 6, 4, 14, 5]],
+    ["Sales Flash", 0, 0, [0, 0, 0, 0, 0, 0, 0, 0, 0]],
+    ["Customer Loyalty", 0, 5, [12, 31, 18, 9, 22, 6, 4, 14, 5]],
     ["Sales Performance", 3, 7, [26, 44, 39, 15, 31, 12, 9, 22, 8]],
     ["Store Labor", 9, 0, [41, 63, 52, 18, 47, 22, 11, 35, 14]],
     ["Inventory Health", 14, 12, [58, 96, 81, 27, 64, 31, 19, 52, 21]],
@@ -941,12 +953,12 @@
       dims: ["DIM_CALENDAR", "DIM_LOCATION", "DIM_PRODUCT", "DIM_VENDOR"] },
     "Supply Chain Flow": { fact: [["FACT_DISTRIBUTION", 72.9, "Rolling 2 yrs, refresh last 5 days"], ["FACT_FREIGHT_COST", 4.3, "Rolling 2 yrs, refresh last 5 days"]],
       dims: ["DIM_CALENDAR", "DIM_LOCATION_FROM", "DIM_LOCATION_TO", "DIM_PRODUCT", "DIM_CARRIER"] },
-    "Customer Analysis": { fact: [["FACT_ORDER_LINE", 33.7, "Rolling 3 yrs, refresh last 10 days"]],
+    "Customer Loyalty": { fact: [["FACT_ORDER_LINE", 33.7, "Rolling 3 yrs, refresh last 10 days"]],
       dims: ["DIM_CALENDAR", "DIM_CUSTOMER_SEGMENT", "DIM_PRODUCT", "DIM_CHANNEL"] },
     "Store Labor": { fact: [["FACT_TIME_ENTRY", 18.6, "None (full refresh)"], ["FACT_BUDGET_HOURS", 1.2, "None (full refresh)"]],
       dims: ["DIM_CALENDAR", "DIM_STORE", "DIM_JOB_GROUP", "DIM_SHIFT_TYPE"] },
     "Markdown Planning": { fact: [["FACT_PRICE_EVENT", 2.4, "None (full refresh)"]], dims: ["DIM_CALENDAR", "DIM_PRODUCT", "DIM_SEASON"] },
-    "Daily Sales": { fact: [["FACT_SALES_TODAY", 0.9, "DirectQuery, no refresh"]], dims: ["DIM_STORE", "DIM_PRODUCT"] }
+    "Sales Flash": { fact: [["FACT_SALES_TODAY", 0.9, "DirectQuery, no refresh"]], dims: ["DIM_STORE", "DIM_PRODUCT"] }
   };
   const modelNames = Object.keys(SCHEMA);
   $("#sm-model").innerHTML = modelNames.map((m) => `<option>${m}</option>`).join("");
@@ -963,7 +975,7 @@
       out.push({ from: `${f}[${fkOf(d)}]`, to: `${d}[${keyOf(d)}]`, card: "Many to one", both: false, active: true });
     }));
     if (s.fact[0]) {                                      // a role-playing date, kept inactive
-      if (s.dims.includes("DIM_CALENDAR") && m !== "Daily Sales")
+      if (s.dims.includes("DIM_CALENDAR") && m !== "Sales Flash")
         out.push({ from: `${s.fact[0][0]}[SHIP_DATE_KEY]`, to: "DIM_CALENDAR[CALENDAR_KEY]", card: "Many to one", both: false, active: false });
     }
     if (m === "Inventory Health" || m === "Supply Chain Flow") out[1].both = true;   // the one to review
@@ -980,10 +992,10 @@
   function drawSto() {
     const m = $("#sm-model").value, s = SCHEMA[m];
     seed = 7 + modelNames.indexOf(m);                      // same numbers every time for a model
-    const rows = s.fact.map(([t, mrows, inc]) => ({ t, mode: m === "Daily Sales" ? "DirectQuery" : "Import", inc, rows: mrows * 1e6, mb: mrows * (18 + rnd() * 9) }))
+    const rows = s.fact.map(([t, mrows, inc]) => ({ t, mode: m === "Sales Flash" ? "DirectQuery" : "Import", inc, rows: mrows * 1e6, mb: mrows * (18 + rnd() * 9) }))
       .concat(s.dims.map((d) => {
         const n = d === "DIM_CALENDAR" ? 3653 : Math.round(200 + rnd() * (d.includes("PRODUCT") ? 180000 : 4000));
-        return { t: d, mode: m === "Daily Sales" ? "Dual" : (d === "DIM_CALENDAR" ? "Import" : "Dual"), inc: "None (full refresh)", rows: n, mb: n * 0.0009 + rnd() * 2 };
+        return { t: d, mode: m === "Sales Flash" ? "Dual" : (d === "DIM_CALENDAR" ? "Import" : "Dual"), inc: "None (full refresh)", rows: n, mb: n * 0.0009 + rnd() * 2 };
       }));
     const days = ["10/14", "10/02", "09/30", "09/18", "10/21", "10/09"];
     tiles($("#sto-tiles"), [["Tables", rows.length], ["Incremental", rows.filter((r) => !r.inc.startsWith("None") && !r.inc.startsWith("Direct")).length],
@@ -1020,7 +1032,7 @@
       ["On-Time Delivery %", "Distribution", "0.0%", "DIVIDE(CALCULATE([Units Shipped], FACT_DISTRIBUTION[ON_TIME] = TRUE), [Units Shipped])", 0],
       ["Avg Days in Transit", "Distribution", "0.0", "AVERAGE(FACT_DISTRIBUTION[TRANSIT_DAYS])", 0],
       ["Units In Transit", "Distribution", "#,0", "CALCULATE([Units Shipped], FACT_DISTRIBUTION[STATUS] = \"In transit\")", 1]],
-    "Customer Analysis": [
+    "Customer Loyalty": [
       ["Orders", "Orders", "#,0", "DISTINCTCOUNT(FACT_ORDER_LINE[ORDER_ID])", 1],
       ["Order Sales", "Orders", "$#,0", "SUM(FACT_ORDER_LINE[NET_SALES])", 1],
       ["Avg Order Value", "Orders", "$#,0.00", "DIVIDE([Order Sales], [Orders])", 1],
@@ -1033,7 +1045,7 @@
     "Markdown Planning": [
       ["Markdown $", "Markdowns", "$#,0", "SUM(FACT_PRICE_EVENT[MARKDOWN_AMT])", 1],
       ["Markdown Rate %", "Markdowns", "0.0%", "DIVIDE([Markdown $], SUM(FACT_PRICE_EVENT[ORIGINAL_RETAIL]))", 0]],
-    "Daily Sales": [
+    "Sales Flash": [
       ["Sales Today", "", "$#,0", "SUM(FACT_SALES_TODAY[NET_SALES])", 1],
       ["Sales Goal", "", "$#,0", "SUM(FACT_SALES_TODAY[GOAL])", 0],
       ["Sales vs Goal %", "", "0.0%", "DIVIDE([Sales Today] - [Sales Goal], [Sales Goal])", 1]]
