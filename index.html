@@ -203,6 +203,10 @@
   .hb .tr i { display: block; height: 100%; background: var(--bar); border-radius: 3px; }
   .hb .n { text-align: right; font-variant-numeric: tabular-nums; }
   .note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+  .tbl-wrap.tall { max-height: 420px; overflow-y: auto; }
+  .tbl-wrap.tall thead th { position: sticky; top: 0; background: var(--card); }
+  .rt code { font-family: Consolas, "Cascadia Mono", monospace; font-size: 11.5px; color: var(--text); white-space: pre; }
+  .miss { color: var(--warn); }
   .split { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
   .split h4 { margin: 0 0 6px; font-size: 13px; font-weight: 600; }
 
@@ -377,13 +381,15 @@
     <figure class="report" aria-labelledby="sm-title">
       <div class="rpt-head">
         <span class="rpt-title" id="sm-title">Semantic Model Metadata</span>
-        <span class="rpt-tag">Retail BI governance &middot; 5 report pages</span>
+        <span class="rpt-tag">Retail BI governance &middot; 7 report pages</span>
       </div>
       <div class="rpt-body">
         <div class="pg-tabs" role="tablist" aria-label="Report pages" id="sm-tabs">
           <button type="button" class="pg-tab" role="tab" id="t-info" aria-controls="pg-info" aria-selected="true">Model Info</button>
           <button type="button" class="pg-tab" role="tab" id="t-conn" aria-controls="pg-conn" aria-selected="false" tabindex="-1">Connections</button>
           <button type="button" class="pg-tab" role="tab" id="t-cmp" aria-controls="pg-cmp" aria-selected="false" tabindex="-1">PROD vs QA</button>
+          <button type="button" class="pg-tab" role="tab" id="t-mea" aria-controls="pg-mea" aria-selected="false" tabindex="-1">Measures</button>
+          <button type="button" class="pg-tab" role="tab" id="t-col" aria-controls="pg-col" aria-selected="false" tabindex="-1">Columns</button>
           <button type="button" class="pg-tab" role="tab" id="t-rel" aria-controls="pg-rel" aria-selected="false" tabindex="-1">Relationships</button>
           <button type="button" class="pg-tab" role="tab" id="t-sto" aria-controls="pg-sto" aria-selected="false" tabindex="-1">Storage &amp; Refresh</button>
         </div>
@@ -440,6 +446,30 @@
               <div class="hb" id="cmp-bars"></div>
               <p class="note">Tap a model to drill in. Green zeros mean PROD and QA match.</p>
             </div>
+          </div>
+        </div>
+
+        <div class="pg" role="tabpanel" id="pg-mea" aria-labelledby="t-mea" hidden>
+          <div class="tiles t4" id="mea-tiles"></div>
+          <div class="tbl-wrap">
+            <table class="rt" id="mea-table">
+              <caption class="sr-only">Measures in the selected model with their DAX, made-up model</caption>
+              <thead><tr><th scope="col">Measure</th><th scope="col" class="hide-sm">Display folder</th><th scope="col" class="hide-sm">Format</th>
+                <th scope="col">Expression</th><th scope="col">Description</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="pg" role="tabpanel" id="pg-col" aria-labelledby="t-col" hidden>
+          <div class="tiles t4" id="col-tiles"></div>
+          <div class="tbl-wrap tall">
+            <table class="rt" id="col-table">
+              <caption class="sr-only">Columns in the selected model with type and settings, made-up model</caption>
+              <thead><tr><th scope="col">Table</th><th scope="col">Column</th><th scope="col">Data type</th><th scope="col" class="hide-sm">Summarize by</th>
+                <th scope="col" class="hide-sm">Format</th><th scope="col">Hidden</th><th scope="col" class="hide-sm">Description</th></tr></thead>
+              <tbody></tbody>
+            </table>
           </div>
         </div>
 
@@ -795,12 +825,16 @@
   const modelNames = Object.keys(SCHEMA);
   $("#sm-model").innerHTML = modelNames.map((m) => `<option>${m}</option>`).join("");
   $("#sm-model").value = "Supply Chain Flow";
+  // dimension's own key, and the fact's foreign key to it (role-playing copies of a
+  // dimension, like DIM_LOCATION_FROM / _TO, need separate keys on the fact)
   const keyOf = (d) => d.replace(/^DIM_/, "").replace(/_(FROM|TO)$/, "") + "_KEY";
+  const fkOf = (d) => { const r = d.match(/_(FROM|TO)$/); return (r ? r[1] + "_" : "") + keyOf(d); };
+  const joins = (fi, di) => !(fi > 0 && di > 2);         // a second fact only joins the core dims
   function rels(m) {
     const s = SCHEMA[m], out = [];
     s.fact.forEach(([f], fi) => s.dims.forEach((d, di) => {
-      if (fi > 0 && di > 2) return;                       // second fact only joins the core dims
-      out.push({ from: `${f}[${keyOf(d)}]`, to: `${d}[${keyOf(d)}]`, card: "Many to one", both: false, active: true });
+      if (!joins(fi, di)) return;
+      out.push({ from: `${f}[${fkOf(d)}]`, to: `${d}[${keyOf(d)}]`, card: "Many to one", both: false, active: true });
     }));
     if (s.fact[0]) {                                      // a role-playing date, kept inactive
       if (s.dims.includes("DIM_CALENDAR") && m !== "Daily Sales")
@@ -832,11 +866,108 @@
       `<tr><td>${r.t}</td><td>${r.mode}</td><td class="hide-sm">${r.inc}</td><td class="n">${num(r.rows)}</td><td class="n">${num(r.mb)}</td>
        <td class="hide-sm">${days[i % days.length]}</td></tr>`).join("");
   }
-  $("#sm-model").addEventListener("change", () => { drawRel(); drawSto(); });
+  // Pages 4 and 5, Measures and Columns: the model's DAX and column settings,
+  // the same detail the real report read from the TMSCHEMA views. Made up.
+  const MEAS = {
+    "Sales Performance": [
+      ["Net Sales", "Sales", "$#,0", "SUM(FACT_SALES_DAY[NET_SALES])", 1],
+      ["Net Sales LY", "Sales\\Time intelligence", "$#,0", "CALCULATE([Net Sales], SAMEPERIODLASTYEAR(DIM_CALENDAR[DATE]))", 1],
+      ["Net Sales vs LY %", "Sales\\Time intelligence", "0.0%", "DIVIDE([Net Sales] - [Net Sales LY], [Net Sales LY])", 1],
+      ["Net Sales MTD", "Sales\\Time intelligence", "$#,0", "TOTALMTD([Net Sales], DIM_CALENDAR[DATE])", 0],
+      ["Units", "Units", "#,0", "SUM(FACT_SALES_DAY[UNITS])", 1],
+      ["AUR", "Units", "$#,0.00", "DIVIDE([Net Sales], [Units])", 1],
+      ["Return Units", "Returns", "#,0", "SUM(FACT_RETURNS_DAY[UNITS])", 0],
+      ["Return Rate %", "Returns", "0.0%", "DIVIDE([Return Units], [Units])", 1],
+      ["Promo Sales %", "Sales", "0.0%", "DIVIDE(CALCULATE([Net Sales], DIM_PROMO[IS_PROMO] = TRUE), [Net Sales])", 0]],
+    "Inventory Health": [
+      ["On Hand Units", "Inventory", "#,0", "CALCULATE(SUM(FACT_INVENTORY_SNAPSHOT[ON_HAND_UNITS]), LASTDATE(DIM_CALENDAR[DATE]))", 1],
+      ["On Hand Cost", "Inventory", "$#,0", "CALCULATE(SUM(FACT_INVENTORY_SNAPSHOT[ON_HAND_COST]), LASTDATE(DIM_CALENDAR[DATE]))", 1],
+      ["Avg Weekly Sales Units", "Inventory", "#,0", "AVERAGEX(VALUES(DIM_CALENDAR[WEEK]), CALCULATE(SUM(FACT_INVENTORY_SNAPSHOT[SALES_UNITS])))", 0],
+      ["Weeks of Supply", "Inventory", "0.0", "DIVIDE([On Hand Units], [Avg Weekly Sales Units])", 1],
+      ["Receipt Units", "Receipts", "#,0", "SUM(FACT_RECEIPTS[UNITS])", 1],
+      ["Sell-Through %", "Inventory", "0.0%", "DIVIDE([Sales Units], [Sales Units] + [On Hand Units])", 0],
+      ["Sales Units", "Inventory", "#,0", "SUM(FACT_INVENTORY_SNAPSHOT[SALES_UNITS])", 1]],
+    "Supply Chain Flow": [
+      ["Units Shipped", "Distribution", "#,0", "SUM(FACT_DISTRIBUTION[UNITS])", 1],
+      ["Freight Cost", "Freight", "$#,0", "SUM(FACT_FREIGHT_COST[COST])", 1],
+      ["Freight per Unit", "Freight", "$#,0.00", "DIVIDE([Freight Cost], [Units Shipped])", 1],
+      ["On-Time Delivery %", "Distribution", "0.0%", "DIVIDE(CALCULATE([Units Shipped], FACT_DISTRIBUTION[ON_TIME] = TRUE), [Units Shipped])", 0],
+      ["Avg Days in Transit", "Distribution", "0.0", "AVERAGE(FACT_DISTRIBUTION[TRANSIT_DAYS])", 0],
+      ["Units In Transit", "Distribution", "#,0", "CALCULATE([Units Shipped], FACT_DISTRIBUTION[STATUS] = \"In transit\")", 1]],
+    "Customer Analysis": [
+      ["Orders", "Orders", "#,0", "DISTINCTCOUNT(FACT_ORDER_LINE[ORDER_ID])", 1],
+      ["Order Sales", "Orders", "$#,0", "SUM(FACT_ORDER_LINE[NET_SALES])", 1],
+      ["Avg Order Value", "Orders", "$#,0.00", "DIVIDE([Order Sales], [Orders])", 1],
+      ["Units per Order", "Orders", "0.00", "DIVIDE(SUM(FACT_ORDER_LINE[UNITS]), [Orders])", 0]],
+    "Store Labor": [
+      ["Hours Worked", "Labor", "#,0", "SUM(FACT_TIME_ENTRY[HOURS])", 1],
+      ["Budget Hours", "Labor", "#,0", "SUM(FACT_BUDGET_HOURS[HOURS])", 1],
+      ["Hours vs Budget %", "Labor", "0.0%", "DIVIDE([Hours Worked] - [Budget Hours], [Budget Hours])", 1],
+      ["Labor Cost", "Labor", "$#,0", "SUMX(FACT_TIME_ENTRY, FACT_TIME_ENTRY[HOURS] * FACT_TIME_ENTRY[RATE])", 0]],
+    "Markdown Planning": [
+      ["Markdown $", "Markdowns", "$#,0", "SUM(FACT_PRICE_EVENT[MARKDOWN_AMT])", 1],
+      ["Markdown Rate %", "Markdowns", "0.0%", "DIVIDE([Markdown $], SUM(FACT_PRICE_EVENT[ORIGINAL_RETAIL]))", 0]],
+    "Daily Sales": [
+      ["Sales Today", "", "$#,0", "SUM(FACT_SALES_TODAY[NET_SALES])", 1],
+      ["Sales Goal", "", "$#,0", "SUM(FACT_SALES_TODAY[GOAL])", 0],
+      ["Sales vs Goal %", "", "0.0%", "DIVIDE([Sales Today] - [Sales Goal], [Sales Goal])", 1]]
+  };
+  const yes = '<span class="status ok"><i aria-hidden="true">&#10003;</i>Yes</span>';
+  const missing = '<span class="status stale"><i aria-hidden="true">!</i>Missing</span>';
+  function drawMea() {
+    const m = $("#sm-model").value, ms = MEAS[m];
+    const folders = new Set(ms.map((x) => x[1]).filter(Boolean)).size;
+    tiles($("#mea-tiles"), [["Measures", ms.length], ["Described", Math.round(ms.filter((x) => x[4]).length / ms.length * 100) + "%"],
+      ["Display folders", folders], ["Time intelligence", ms.filter((x) => /SAMEPERIOD|TOTALMTD|TOTALYTD|LASTDATE/.test(x[3])).length]]);
+    const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+    $("#mea-table tbody").innerHTML = ms.map(([n, f, fmt, dax, d]) =>
+      `<tr><td>${n}</td><td class="hide-sm">${f || "-"}</td><td class="hide-sm">${fmt}</td><td><code>${esc(dax)}</code></td><td>${d ? yes : missing}</td></tr>`).join("");
+  }
+
+  // Columns follow from each table: hidden keys, summed or averaged numbers on
+  // facts, text and dates on dims.
+  const FACT_COLS = { TODAY: ["NET_SALES", "UNITS", "GOAL"], SALES: ["NET_SALES", "UNITS"], RETURNS: ["UNITS"], INVENTORY: ["ON_HAND_UNITS", "ON_HAND_COST", "SALES_UNITS"],
+    RECEIPTS: ["UNITS"], DISTRIBUTION: ["UNITS", "TRANSIT_DAYS", "ON_TIME", "STATUS"], FREIGHT: ["COST"], ORDER: ["ORDER_ID", "NET_SALES", "UNITS"],
+    TIME: ["HOURS", "RATE"], BUDGET: ["HOURS"], PRICE: ["MARKDOWN_AMT", "ORIGINAL_RETAIL"] };
+  const DIM_COLS = { CALENDAR: ["DATE", "WEEK", "FISCAL_MONTH", "FISCAL_YEAR"], STORE: ["STORE_NAME", "DISTRICT", "REGION", "OPEN_DATE"],
+    PRODUCT: ["DEPARTMENT", "CLASS", "STYLE", "COLOR"], CHANNEL: ["CHANNEL_NAME"], PROMO: ["PROMO_NAME", "IS_PROMO"], LOCATION: ["LOCATION_NAME", "LOCATION_TYPE"],
+    VENDOR: ["VENDOR_NAME", "COUNTRY"], CARRIER: ["CARRIER_NAME"], CUSTOMER: ["SEGMENT", "LOYALTY_TIER"], JOB: ["JOB_GROUP"], SHIFT: ["SHIFT_TYPE"], SEASON: ["SEASON", "SEASON_YEAR"] };
+  const kind = (c) => /DATE$/.test(c) ? ["Date", "None", "m/d/yyyy"] : /^(IS_|ON_TIME)/.test(c) ? ["True/false", "None", "-"]
+    : c === "RATE" ? ["Decimal", "Average", "$#,0.00"]
+    : /(SALES|COST|AMT|RETAIL|GOAL)$/.test(c) ? ["Decimal", "Sum", "$#,0.00"] : /(UNITS|HOURS|DAYS)$/.test(c) ? ["Whole number", c === "TRANSIT_DAYS" ? "Average" : "Sum", "#,0"]
+    : /(WEEK|YEAR)$/.test(c) ? ["Whole number", "None", "0"] : ["Text", "None", "-"];
+  function colsOf(m) {
+    const s = SCHEMA[m], out = [];
+    s.fact.forEach(([f], fi) => {
+      s.dims.forEach((d, di) => { if (joins(fi, di)) out.push([f, fkOf(d), "Whole number", "None", "0", true, true]); });
+      const k = Object.keys(FACT_COLS).find((x) => f.includes(x));
+      (FACT_COLS[k] || []).forEach((c) => { const [t, sb, fmt] = kind(c); out.push([f, c, t, sb, fmt, true, c !== "STATUS"]); });
+    });
+    s.dims.forEach((d) => {
+      out.push([d, keyOf(d), "Whole number", "None", "0", true, true]);
+      const k = Object.keys(DIM_COLS).find((x) => d.includes(x));
+      (DIM_COLS[k] || []).forEach((c, i) => { const [t, sb, fmt] = kind(c); out.push([d, c, t, sb, fmt, false, (i + d.length) % 4 !== 0]); });
+    });
+    return out;
+  }
+  function drawCol() {
+    const m = $("#sm-model").value, cs = colsOf(m);
+    tiles($("#col-tiles"), [["Columns", cs.length], ["Hidden", cs.filter((c) => c[5]).length],
+      ["Missing description", cs.filter((c) => !c[6]).length], ["Tables", new Set(cs.map((c) => c[0])).size]]);
+    $("#col-table tbody").innerHTML = cs.map(([t, c, ty, sb, fmt, hid, desc]) =>
+      `<tr><td>${t}</td><td>${c}</td><td>${ty}</td><td class="hide-sm">${sb}</td><td class="hide-sm">${fmt}</td><td>${hid ? "Yes" : "No"}</td>
+       <td class="hide-sm">${desc ? yes : missing}</td></tr>`).join("");
+  }
+
+  $("#sm-model").addEventListener("change", () => {
+    const id = document.querySelector("#sm-tabs [aria-selected='true']").id;
+    ({ "t-mea": drawMea, "t-col": drawCol, "t-rel": drawRel, "t-sto": drawSto }[id] || drawRel)();
+  });
 
   // Page tabs: Model Info and Connections use the environment filter; the last
   // two pages use the model picker; PROD vs QA needs neither.
-  const PAGES = { "t-info": [drawModels, "env"], "t-conn": [drawConn, "env"], "t-cmp": [drawCmp, ""], "t-rel": [drawRel, "model"], "t-sto": [drawSto, "model"] };
+  const PAGES = { "t-info": [drawModels, "env"], "t-conn": [drawConn, "env"], "t-cmp": [drawCmp, ""], "t-mea": [drawMea, "model"],
+    "t-col": [drawCol, "model"], "t-rel": [drawRel, "model"], "t-sto": [drawSto, "model"] };
   function openPage(tab) {
     document.querySelectorAll("#sm-tabs .pg-tab").forEach((t) => {
       const on = t === tab;
