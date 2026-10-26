@@ -108,6 +108,9 @@
   .grid2 .tags { margin-top: auto; }
   .stack { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
   .stack > .card:last-child { flex: 1; }
+  .card.wide { margin: 14px 0 0; }
+  .pbr.two { grid-template-columns: 64px 1fr 64px 1fr; column-gap: 10px; }
+  .pbr.two dd { margin-right: 14px; }
   .term { margin: 0 0 14px; }
   .term pre.code { font-size: 12px; }
   .term figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
@@ -262,6 +265,8 @@
     .hide-sm { display: none; }
     .hero { padding: 36px 0 32px; }
     .hero .wrap, .grid2 { grid-template-columns: 1fr; }
+    .pbr.two { grid-template-columns: 64px 1fr; }
+    .pbr.two dd { margin-right: 0; }
     h1 { font-size: 32px; }
     .lede { font-size: 16px; }
     /* Nav: name and Resume on row 1, section links on row 2 */
@@ -740,8 +745,7 @@
         <div class="tags"><span>Python</span><span>Google Sheets API</span><span>HTML/JS</span></div>
       </div>
 
-      <div class="stack">
-        <div class="card">
+      <div class="card">
           <h3>Task monitor and run reaper</h3>
           <figure class="shots">
             <div class="shot-row one">
@@ -768,17 +772,16 @@
           </figure>
           <div class="tags"><span>Python</span><span>PowerShell</span><span>Gmail API</span></div>
         </div>
+    </div>
 
-        <div class="card">
+    <div class="card wide">
           <h3>Also running unattended</h3>
-          <dl class="pbr">
+          <dl class="pbr two">
             <dt>Bills</dt><dd><b>Utility bill tracker.</b> Python and Playwright pull five utility bills a day into a Sheet, refusing any write unless the month and year match. Replaced a 57 KB AI prompt; ~1.5 hrs a month of portal logins gone.</dd>
             <dt>Airbnb</dt><dd><b>Booking tracker sync.</b> A daily program plans each change to the bookings Sheet before writing it, and exits non-zero on any anomaly so the monitor catches it. Replaced a daily AI task at roughly zero token cost.</dd>
           </dl>
           <div class="tags"><span>Python</span><span>Playwright</span><span>Sheets API</span><span>Task Scheduler</span></div>
         </div>
-      </div>
-    </div>
   </div>
 </section>
 
