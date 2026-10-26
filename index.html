@@ -131,6 +131,8 @@
     border: 1px solid var(--line); border-radius: 6px; background: var(--bg); }
   .shot-row a:hover img { border-color: var(--accent); }
   .shots figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .shot-row.one { grid-template-columns: 1fr; }
+  .shot-row.one img { aspect-ratio: 1600 / 1029; }
 
   .skills { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; padding: 0; list-style: none; }
   .skills li { font-size: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; }
@@ -344,18 +346,6 @@
 
     <div class="card">
       <div class="card-head">
-        <h3>Power BI Developer, Halliburton</h3>
-        <span class="meta">2020 - 2021 &middot; Hybrid</span>
-      </div>
-      <ul>
-        <li><b>30+ external clients:</b> helped build a customer-facing platform over 20K+ frac stages of data, with row-level security keeping each client's data apart.</li>
-        <li><b>Usage monitoring:</b> Azure Blob tracking of who used which reports, to steer what got built next.</li>
-      </ul>
-      <div class="tags"><span>Power BI</span><span>Row-level security</span><span>Azure Data Factory</span><span>SQL</span></div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
         <h3>Senior Software Engineer, Insight Enterprises</h3>
         <span class="meta">2022 - 2023 &middot; Remote</span>
       </div>
@@ -366,7 +356,19 @@
       <div class="tags"><span>Power BI</span><span>DAX</span><span>Azure DevOps</span></div>
     </div>
 
-    <p class="earlier">Earlier: BI Developer at Computershare (2021 - 2022), Data Analyst II at Sierra Nevada Corporation (2018 - 2020), and Power BI contracts for grocery and construction clients. Full history is on the <a href="assets/Austin%20Lewis%20Resume.pdf" target="_blank" rel="noopener">resume</a>.</p>
+    <div class="card">
+      <div class="card-head">
+        <h3>Power BI Developer, Halliburton</h3>
+        <span class="meta">2020 - 2021 &middot; Hybrid</span>
+      </div>
+      <ul>
+        <li><b>30+ external clients:</b> helped build a customer-facing platform over 20K+ frac stages of data, with row-level security keeping each client's data apart.</li>
+        <li><b>Usage monitoring:</b> Azure Blob tracking of who used which reports, to steer what got built next.</li>
+      </ul>
+      <div class="tags"><span>Power BI</span><span>Row-level security</span><span>Azure Data Factory</span><span>SQL</span></div>
+    </div>
+
+    <p class="earlier">Other roles: BI Developer at Computershare (2021 - 2022), Data Analyst II at Sierra Nevada Corporation (2018 - 2020), and Power BI contracts for grocery and construction clients. Full history is on the <a href="assets/Austin%20Lewis%20Resume.pdf" target="_blank" rel="noopener">resume</a>.</p>
   </div>
 </section>
 
@@ -741,6 +743,12 @@
       <div class="stack">
         <div class="card">
           <h3>Task monitor and run reaper</h3>
+          <figure class="shots">
+            <div class="shot-row one">
+              <a href="assets/task-monitor.png" target="_blank" rel="noopener"><img src="assets/task-monitor-sm.webp" width="960" height="618" loading="lazy" alt="Task monitor page, made-up data: scheduled programs and Claude tasks grouped by area, each with its status, schedule, last run and next run. Three Claude tasks show Superseded by the program that replaced them."></a>
+            </div>
+            <figcaption>The monitor page, filled with made-up data. Select it to open full size.</figcaption>
+          </figure>
           <dl class="pbr">
             <dt>Problem</dt><dd>Six hung AI runs piled up over three days, burned ~2.5 CPU-hours and blocked new jobs.</dd>
             <dt>Built</dt><dd>A daily health check that emails only on trouble, plus an hourly reaper that finds hung runs by command line.</dd>
