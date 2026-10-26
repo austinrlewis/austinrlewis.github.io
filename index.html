@@ -134,6 +134,13 @@
 
   .skills { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; padding: 0; list-style: none; }
   .skills li { font-size: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; }
+  .skill-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 0 0 32px; }
+  @media (max-width: 900px) { .skill-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .skill-grid { grid-template-columns: 1fr; } }
+  .skill-card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; }
+  .skill-card h3 { font-size: 16px; margin: 0 0 12px; }
+  .skill-card ul.tags { list-style: none; margin: 0; padding: 0; }
+  .skill-card ul.tags li { font-size: 13px; background: var(--chip); border: 1px solid var(--line); border-radius: 8px; padding: 4px 10px; color: var(--text); }
   h2.h2s { font-size: 20px; }
   .creds { margin: 0; padding-left: 18px; }
   .creds li { margin: 4px 0; }
@@ -770,10 +777,33 @@
 <section id="skills" class="alt">
   <div class="wrap">
     <h2>Skills</h2>
-    <ul class="skills">
-      <li>Power BI</li><li>DAX</li><li>Power Query (M)</li><li>Snowflake</li><li>SQL / T-SQL</li><li>Azure Data Factory</li>
-      <li>SSAS / SSIS / SSRS</li><li>Python</li><li>Google Workspace APIs</li><li>Claude</li><li>Copilot</li>
-    </ul>
+    <p class="sub">What I build with, grouped by the job it does.</p>
+    <div class="skill-grid">
+      <div class="skill-card">
+        <h3>Power BI</h3>
+        <ul class="tags"><li>Power BI</li><li>DAX</li><li>Power Query (M)</li><li>Paginated reports</li><li>Row-level security</li><li>Incremental refresh</li><li>Copilot</li></ul>
+      </div>
+      <div class="skill-card">
+        <h3>Data modeling</h3>
+        <ul class="tags"><li>Star schema</li><li>Semantic models</li><li>Relationship design</li><li>Tabular Editor</li><li>DAX Studio</li></ul>
+      </div>
+      <div class="skill-card">
+        <h3>Data sources</h3>
+        <ul class="tags"><li>Snowflake</li><li>SQL / T-SQL</li><li>SQL Server</li><li>Databricks</li><li>Oracle</li></ul>
+      </div>
+      <div class="skill-card">
+        <h3>Microsoft data stack</h3>
+        <ul class="tags"><li>Azure Data Factory</li><li>SSAS</li><li>SSIS</li><li>SSRS</li><li>Power Apps</li></ul>
+      </div>
+      <div class="skill-card">
+        <h3>Delivery</h3>
+        <ul class="tags"><li>Requirements gathering</li><li>Azure DevOps</li><li>Git</li><li>Deployment pipelines</li><li>SAFe Agile</li></ul>
+      </div>
+      <div class="skill-card">
+        <h3>Automation and AI</h3>
+        <ul class="tags"><li>Python</li><li>Playwright</li><li>PowerShell</li><li>Google Workspace APIs</li><li>Claude</li></ul>
+      </div>
+    </div>
     <h2 class="h2s">Certifications and education</h2>
     <ul class="creds">
       <li>AI Fluency: Framework &amp; Foundations - Anthropic, Aug 2026</li>
