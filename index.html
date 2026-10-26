@@ -106,6 +106,11 @@
   .pbr dt { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); padding-top: 2px; }
   .pbr dd { margin: 0; }
   .grid2 .tags { margin-top: auto; }
+  .stack { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .stack > .card:last-child { flex: 1; }
+  .term { margin: 0 0 14px; }
+  .term pre.code { font-size: 12px; }
+  .term figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
 
   /* Property Command Center: data-flow diagram */
   .flow { margin: 12px 0 0; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 10px 10px 8px; }
@@ -726,18 +731,39 @@
         <div class="tags"><span>Python</span><span>Google Sheets API</span><span>HTML/JS</span></div>
       </div>
 
-      <div class="card">
-        <h3>Task monitor and run reaper</h3>
-        <dl class="pbr">
-          <dt>Problem</dt><dd>Six hung AI runs piled up over three days, burned ~2.5 CPU-hours and blocked new jobs.</dd>
-          <dt>Built</dt><dd>A daily health check that emails only on trouble, plus an hourly reaper that finds hung runs by command line.</dd>
-          <dt>Result</dt><dd>Hung runs clean themselves up; a failed job reaches the inbox the same day.</dd>
-          <dt>Code</dt><dd><a href="https://github.com/austinrlewis/claude-run-reaper">The reaper on GitHub</a>, with its 134 tests.</dd>
-        </dl>
-        <div class="tags"><span>Python</span><span>PowerShell</span><span>Gmail API</span></div>
+      <div class="stack">
+        <div class="card">
+          <h3>Task monitor and run reaper</h3>
+          <dl class="pbr">
+            <dt>Problem</dt><dd>Six hung AI runs piled up over three days, burned ~2.5 CPU-hours and blocked new jobs.</dd>
+            <dt>Built</dt><dd>A daily health check that emails only on trouble, plus an hourly reaper that finds hung runs by command line.</dd>
+            <dt>Result</dt><dd>Hung runs clean themselves up; a failed job reaches the inbox the same day.</dd>
+            <dt>Code</dt><dd><a href="https://github.com/austinrlewis/claude-run-reaper">The reaper on GitHub</a>, with its 134 tests.</dd>
+          </dl>
+          <figure class="term">
+<pre class="code"><code><span class="s">&gt; python -m claude_run_reaper.tests.run_all</span>
+  ok   test_reap      23/23 passed
+  ok   test_idle      47/47 passed
+  ok   test_record     4/4 passed
+  ok   test_wiring    11/11 passed
+  ok   test_heartbeat 49/49 passed
+
+<span class="f">all suites passed</span></code></pre>
+            <figcaption>The test run, standard library only. Tests are built from real command lines and incidents.</figcaption>
+          </figure>
+          <div class="tags"><span>Python</span><span>PowerShell</span><span>Gmail API</span></div>
+        </div>
+
+        <div class="card">
+          <h3>Also running unattended</h3>
+          <dl class="pbr">
+            <dt>Bills</dt><dd><b>Utility bill tracker.</b> Python and Playwright pull five utility bills a day into a Sheet, refusing any write unless the month and year match. Replaced a 57 KB AI prompt; ~1.5 hrs a month of portal logins gone.</dd>
+            <dt>Airbnb</dt><dd><b>Booking tracker sync.</b> A daily program plans each change to the bookings Sheet before writing it, and exits non-zero on any anomaly so the monitor catches it. Replaced a daily AI task at roughly zero token cost.</dd>
+          </dl>
+          <div class="tags"><span>Python</span><span>Playwright</span><span>Sheets API</span><span>Task Scheduler</span></div>
+        </div>
       </div>
     </div>
-    <p class="earlier">Also running unattended: a utility bill tracker (Python and Playwright, five bills a day) and an Airbnb tracker sync that replaced a daily AI task.</p>
   </div>
 </section>
 
