@@ -3,24 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Austin Lewis | Power BI Developer</title>
-<meta name="description" content="Power BI Developer, 8+ years: DAX, Snowflake and Azure BI semantic models, plus Python and AI automation. Open to remote roles.">
+<title>Austin Lewis | Power BI Developer, Denver (Remote)</title>
+<meta name="description" content="Power BI Developer in Denver, CO, 8+ years: DAX, Snowflake and Azure BI semantic models, plus Python and AI automation. Open to remote roles.">
 <meta name="author" content="Austin Lewis">
 <meta name="color-scheme" content="dark light">
 <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Austin Lewis">
-<meta property="og:title" content="Austin Lewis | Power BI Developer">
+<meta property="og:title" content="Austin Lewis | Power BI Developer, Denver (Remote)">
 <meta property="og:description" content="I build semantic models, reports and dashboards people trust, and I automate the work around them with Python and AI. Sample reports, projects and contact.">
 <meta property="og:url" content="https://austinrlewis.github.io/">
 <meta property="og:image" content="https://austinrlewis.github.io/assets/og-image.png?v=3">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://austinrlewis.github.io/assets/og-image.png?v=3">
-<meta name="twitter:title" content="Austin Lewis | Power BI Developer">
+<meta name="twitter:title" content="Austin Lewis | Power BI Developer, Denver (Remote)">
 <meta name="twitter:description" content="I build semantic models, reports and dashboards people trust, and I automate the work around them with Python and AI.">
 <link rel="canonical" href="https://austinrlewis.github.io/">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Austin Lewis",
+  "jobTitle": "Power BI Developer",
+  "url": "https://austinrlewis.github.io/",
+  "address": { "@type": "PostalAddress", "addressLocality": "Denver", "addressRegion": "CO", "addressCountry": "US" },
+  "sameAs": ["https://www.linkedin.com/in/austin-lewis/", "https://github.com/austinrlewis"],
+  "knowsAbout": ["Power BI", "DAX", "Semantic models", "Row-level security", "Snowflake", "Azure Data Factory", "SQL", "Python"],
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of Colorado Boulder" }
+}
+</script>
 <style>
   :root {
     --bg: #0f1115; --band: #13161c; --card: #171a21; --line: #262b36;
@@ -74,6 +87,9 @@
   .eyebrow { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
     color: var(--accent); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
   h1 { font-size: 42px; line-height: 1.12; margin: 16px 0 12px; letter-spacing: -.01em; }
+  h1 .who { display: block; font-size: 20px; font-weight: 600; color: var(--muted); letter-spacing: 0; margin-bottom: 6px; }
+  /* Inline text links: taller tap area (WCAG 2.5.8 asks for 24px) without moving the text */
+  p a:not(.btn), dd a:not(.btn) { padding-block: 3px; }
   .lede { font-size: 17px; color: var(--muted); margin: 0 0 18px; max-width: 34em; }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none; }
   .chips li { font-size: 12px; background: var(--chip); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; color: var(--muted); }
@@ -173,7 +189,7 @@
   .tiles { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin: 0 0 12px; }
   .tiles.t4 { grid-template-columns: repeat(4, 1fr); }
   .tile { border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; background: var(--bg); min-width: 0; }
-  .tile span { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+  .tile span { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
   .tile b { font-size: 18px; }
   .tbl-wrap { overflow-x: auto; }
   table.rt { width: 100%; border-collapse: collapse; font-size: 12px; }
@@ -201,8 +217,8 @@
   details.dt .charts { margin-top: 8px; }
   figure.report figcaption { font-size: 13px; color: var(--muted); padding: 12px 16px 0; max-width: 62em; }
   .status { display: inline-flex; align-items: center; gap: 6px; }
-  .status i { width: 15px; height: 15px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
-    font-style: normal; font-size: 10px; font-weight: 700; color: #fff; }
+  .status i { width: 16px; height: 16px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-style: normal; font-size: 11px; font-weight: 700; color: #fff; }
   .status.ok i { background: var(--good); }
   .status.stale i { background: var(--warn); color: #1a1300; }
   .status.fail i { background: var(--crit); }
@@ -285,6 +301,9 @@
     .card { padding: 18px 16px; }
     .rpt-body { padding: 12px 12px 10px; }
     .rt th, .rt td { padding-left: 6px; padding-right: 6px; }
+    /* Let long model names wrap so Size GB fits on a phone */
+    #sm-table td:nth-child(3) { white-space: normal; min-width: 110px; }
+    h1 .who { font-size: 18px; }
   }
 </style>
 </head>
@@ -312,13 +331,13 @@
   <div class="wrap">
     <div>
       <span class="eyebrow">Open to remote roles &middot; Denver, CO</span>
-      <h1>Power BI Developer</h1>
+      <h1><span class="who">Austin Lewis</span> Power BI Developer</h1>
       <p class="lede">I build semantic models, reports and dashboards people trust, and I automate the work around them with Python and AI.</p>
       <ul class="chips" aria-label="Core tools">
         <li>Power BI</li><li>DAX</li><li>Snowflake</li><li>Azure BI</li><li>SQL</li><li>Python</li><li>Copilot</li>
       </ul>
       <div class="actions">
-        <a class="btn" href="#work">See the work</a>
+        <a class="btn" href="#samples">See sample reports</a>
         <a class="btn ghost" href="assets/Austin%20Lewis%20Resume.pdf" target="_blank" rel="noopener">Download resume</a>
         <a class="btn ghost" href="https://www.linkedin.com/in/austin-lewis/" target="_blank" rel="noopener">LinkedIn</a>
       </div>
@@ -343,7 +362,7 @@
         <span class="meta">2023 - 2026 &middot; Remote</span>
       </div>
       <ul>
-        <li><b>Largest BI initiative in a decade:</b> core developer on COMET, the migration that replaced legacy dashboards across the company.</li>
+        <li><b>Largest BI initiative in a decade:</b> core developer on the company-wide migration that replaced legacy dashboards.</li>
         <li><b>Snowflake star schemas:</b> DAX semantic models with row-level security and incremental refresh, so teams answer their own questions instead of filing tickets.</li>
       </ul>
       <div class="tags"><span>Power BI</span><span>DAX</span><span>Snowflake</span><span>Tabular Editor</span><span>Copilot</span></div>
