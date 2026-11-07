@@ -14,7 +14,7 @@
 <meta property="og:title" content="Semantic Model Metadata | Austin Lewis">
 <meta property="og:description" content="A Power BI model that reads the metadata of every other model, with 11 automated release checks.">
 <meta property="og:url" content="https://austinrlewis.github.io/semantic-model-metadata.html">
-<meta property="og:image" content="https://austinrlewis.github.io/assets/og-case-study.png?v=3">
+<meta property="og:image" content="https://austinrlewis.github.io/assets/og-case-study.png?v=4">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://austinrlewis.github.io/semantic-model-metadata.html">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -85,7 +85,7 @@
   .pipe li.key { border-color: var(--accent); }
 
   .erd { margin: 14px 0 0; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 8px; }
-  .erd img { display: block; width: 2400px; max-width: none; height: auto; border-radius: 6px; }
+  .erd img { display: block; width: 100%; min-width: 640px; height: auto; border-radius: 6px; }
 
   pre.code { margin: 0; padding: 12px 14px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto;
     font: 12.5px/1.5 Consolas, "Cascadia Mono", monospace; color: var(--text); white-space: pre; }
@@ -184,9 +184,9 @@
       <li>Snowflake's OBJECT_DEPENDENCIES view maps each view a model reads to the tables behind it, and which roles can read it.</li>
     </ul>
     <figure class="erd">
-<a href="assets/semantic-model-diagram.png" target="_blank" rel="noopener"><img src="assets/semantic-model-diagram.png" width="3382" height="611" loading="lazy" alt="Power BI model view of the Semantic Model Metadata model: 17 tables in two rows. Workspace Info is the hub, joined to Workspace Parameters, Model Size GB, Model Last Refresh, Model Views and Relationships. Model Views joins Tables and Snowflake View Roles; Tables joins Columns and Tables Entity. Relationships joins From and To copies of Columns and Tables, each with its storage mode table."></a>
+<a href="assets/semantic-model-diagram.png" target="_blank" rel="noopener"><img src="assets/semantic-model-diagram.png" width="1397" height="737" loading="lazy" alt="Power BI model view of the Semantic Model Metadata model, 17 tables. Workspace Info is the hub, joined to Workspace Parameters, Model Size GB, Model Last Refresh, Model Views and Relationships. Model Views joins Tables and Snowflake View Roles; Tables joins Columns and Tables Entity. Relationships joins From and To copies of Columns and Tables, each with its storage mode table."></a>
     </figure>
-    <p class="cap">The real model in Power BI Desktop's model view, all 17 tables. Scroll sideways to follow it, or select it to open full size.</p>
+    <p class="cap">The real model in Power BI Desktop's model view, all 17 tables. Select it to open full size; on a phone, scroll it sideways.</p>
   </div>
 </section>
 
