@@ -260,7 +260,7 @@
   .built .note { margin: 0 0 10px; }
   .built-grid { display: grid; grid-template-columns: minmax(0, .75fr) minmax(0, 1.5fr); gap: 18px; align-items: start; margin-top: 16px; }
   .erd { margin: 0; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 8px; }
-  .erd img { display: block; width: 100%; min-width: 640px; height: auto; border-radius: 6px; }
+  .erd img { display: block; width: 2400px; max-width: none; height: auto; border-radius: 6px; }
   .erd figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
   pre.code { margin: 0; padding: 12px 14px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto;
     font: 12.5px/1.5 Consolas, "Cascadia Mono", monospace; color: var(--text); white-space: pre; }
@@ -516,10 +516,10 @@
       </div>
       <div class="built">
         <h4>How it's built</h4>
-        <p class="note">The real model in Power BI Desktop's model view, showing 9 of its 17 tables. It has 16 relationships, fed by 204 metadata queries. Names in the code are changed.</p>
+        <p class="note">The real model in Power BI Desktop's model view: 17 tables and 16 relationships, fed by 204 metadata queries. Names in the code are changed.</p>
         <figure class="erd">
-          <a href="assets/semantic-model-diagram.png" target="_blank" rel="noopener"><img src="assets/semantic-model-diagram.png" width="1400" height="693" loading="lazy" alt="Power BI model view of the Semantic Model Metadata model. Relationships sits in the middle, joined to role-playing copies of Columns and Tables for the From and To end of each relationship. Tables, Columns and Snowflake Connections join to a Semantic Model and PBI Environment table."></a>
-          <figcaption>Click to open full size.</figcaption>
+          <a href="assets/semantic-model-diagram.png" target="_blank" rel="noopener"><img src="assets/semantic-model-diagram.png" width="3382" height="611" loading="lazy" alt="Power BI model view of the Semantic Model Metadata model: 17 tables in two rows. Workspace Info is the hub, joined to Workspace Parameters, Model Size GB, Model Last Refresh, Model Views and Relationships. Model Views joins Tables and Snowflake View Roles; Tables joins Columns and Tables Entity. Relationships joins From and To copies of Columns and Tables, each with its storage mode table."></a>
+          <figcaption>Scroll sideways to follow it, or select it to open full size.</figcaption>
         </figure>
         <div class="built-grid">
           <div>
