@@ -127,6 +127,8 @@
   .pbr.two { grid-template-columns: 64px 1fr 64px 1fr; column-gap: 10px; }
   .pbr.two dd { margin-right: 14px; }
   .term { margin: 0 0 14px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 22px; align-items: start; }
+  .split .term { margin-top: 12px; }
   .term pre.code { font-size: 12px; }
   .term figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
 
@@ -272,7 +274,7 @@
     .charts { grid-template-columns: 1fr; }
     .hide-sm { display: none; }
     .hero { padding: 36px 0 32px; }
-    .hero .wrap, .grid2 { grid-template-columns: 1fr; }
+    .hero .wrap, .grid2, .split { grid-template-columns: 1fr; }
     .pbr.two { grid-template-columns: 64px 1fr; }
     .pbr.two dd { margin-right: 0; }
     h1 { font-size: 32px; }
@@ -715,12 +717,37 @@
     </div>
 
     <div class="card wide">
+          <h3>Failure fixer</h3>
+          <div class="split">
+            <dl class="pbr">
+              <dt>Problem</dt><dd>Six programs each emailed their own failures, and a code bug stayed broken until I opened a Claude session to fix it.</dd>
+              <dt>Built</dt><dd>An hourly job that gathers every failure into one daily email and starts a headless Claude Code run to fix code-only bugs. Permission rules and a command hook limit each run to the failing program's files and its tests. Anything touching money, a calendar or another person waits for my reply.</dd>
+              <dt>Result</dt><dd>First 12 days: 3 bugs fixed and tested with no one at the keyboard, 7 sent to me with the steps, 17 closed as no action needed.</dd>
+            </dl>
+            <figure class="term">
+<pre class="code"><code><span class="s">&gt; python tools\run_all_tests.py failure_fixer</span>
+  PASS  failure_fixer   543 checks, 0 failed
+
+<span class="s">&gt; tests\fence_proof.ps1</span>
+  33/33 escape attempts refused
+  1 one-line bug fixed, tests green
+
+<span class="f">fence proof passed</span></code></pre>
+              <figcaption>The test suite, then 33 attempts to break out of the fence. Each one has to be refused, and the proof reruns after any change to the fence.</figcaption>
+            </figure>
+          </div>
+          <div class="tags"><span>Python</span><span>Claude Code</span><span>Hooks</span><span>Gmail API</span><span>Task Scheduler</span></div>
+        </div>
+
+    <div class="card wide">
           <h3>Also running unattended</h3>
           <dl class="pbr two">
             <dt>Bills</dt><dd><b>Utility bill tracker.</b> Python and Playwright pull five utility bills a day into a Sheet, refusing any write unless the month and year match. Replaced a 57 KB AI prompt; ~1.5 hrs a month of portal logins gone.</dd>
             <dt>Airbnb</dt><dd><b>Booking tracker sync.</b> A daily program plans each change to the bookings Sheet before writing it, and exits non-zero on any anomaly so the monitor catches it. Replaced a daily AI task at roughly zero token cost.</dd>
+            <dt>Water</dt><dd><b>Sprinkler history.</b> A read-only API pull copies every Rachio run and skip into a Sheet and works out gallons per night from the city's hourly meter data. 169 offline tests, including one that fails if any write call appears.</dd>
+            <dt>Sync</dt><dd><b>Dashboard sync button.</b> A button on the finance dashboard saves a CSV, and a custom pccsync:// link hands it to Python. It merges only new rows, holds back conflicts, rebuilds the dashboard and archives the file. 22 tests.</dd>
           </dl>
-          <div class="tags"><span>Python</span><span>Playwright</span><span>Sheets API</span><span>Task Scheduler</span></div>
+          <div class="tags"><span>Python</span><span>Playwright</span><span>Sheets API</span><span>REST APIs</span><span>Task Scheduler</span></div>
         </div>
   </div>
 </section>
